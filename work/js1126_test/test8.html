@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>通过输入和选择改变div样式</title>
+	<meta name="description" content="" />
+	<style>
+	div {
+		width: 100px;
+		height: 100px;
+		background-color: red;
+		overflow: hidden;
+		text-align: center;
+		font-weight: bold;
+		font-size: 24px;
+	}
+	input {
+		width: 300px;
+	}
+	</style>
+</head>
+<body>
+	<select id="sel">
+		<option value="width">宽度</option>
+		<option value="height">高度</option>
+		<option value="background">背景色</option>
+		<option value="color">文字颜色</option>
+	</select>
+	<input type="text" name="" value="请输入自然数。" id="ipt"/>
+	<button id="bt">修改</button>
+	<div id="d">2013</div>
+<script>
+	var sel = document.getElementById("sel");
+	var div = document.getElementById("d");
+	var bt = document.getElementById("bt");
+	var ipt = document.getElementById("ipt");
+	// 提示信息
+	sel.onchange = function() {
+		ipt.value = ((sel.value == "height") || (sel.value == "width")) ? "请输入自然数。" : "请输入带#的16进制颜色值或颜色英文单词。";
+	}
+	// 清空input
+	ipt.onclick = function() {
+		ipt.value = "";
+	}
+	// 执行修改
+	bt.onclick = function() {
+		if (ipt.value < 0){
+			alert("输入有误，请重新输入！");
+		} else {
+			switch (sel.value){
+				case "width" :
+					div.style.width = ipt.value + "px";
+					break;
+				case "height" :
+					div.style.height = ipt.value + "px";
+					break;
+				case "background" :
+					div.style.backgroundColor = ipt.value;
+					break;
+				case "color" :
+					div.style.color = ipt.value;
+					break;
+			}
+		}
+	}
+</script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>改变DIV的CLASS</title>
+	<meta name="description" content="" />
+	<style>
+	div {
+		width: 400px;
+		height: 200px;
+		text-align: center;
+	}
+	.div1 {
+		color: yellow;
+		background-color: blue;
+	}
+	.div2 {
+		color: green;
+		background-color: red;
+	}
+	</style>
+</head>
+<body>
+<div class="div1">
+	<span>我是一个div。</span>
+</div>
+<script>
+	window.onload = function() {
+		var divs = document.getElementsByTagName("div");
+		divs[0].onclick = function() {
+			divs[0].className="div2";
+		}
+	}
+</script>
+</body>
+</html>

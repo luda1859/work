@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>隔行变色+点击变色</title>
+	<meta name="description" content="" />
+	<style>
+	li {
+		width: 200px;
+		height: 30px;
+		line-height: 30px;
+		margin: 5px;
+		list-style-type: none;
+	}
+	.red {
+		color: green;
+		background-color: red;
+	}
+	.blue {
+		color: yellow;
+		background-color: blue;
+	}
+	.green {
+		color: yellow;
+		background-color: green;
+	}
+	</style>
+</head>
+<body>
+<ul id="bs">
+<li>我是一个LI。</li>
+<li>我是一个LI。</li>
+<li>我是一个LI。</li>
+<li>我是一个LI。</li>
+<li>我是一个LI。</li>
+<li>我是一个LI。</li>
+<li>我是一个LI。</li>
+<li>我是一个LI。</li>
+</ul>
+<script>
+window.onload = function() {
+	var ulbs = document.getElementById("bs");
+	var lis = document.getElementById("bs").getElementsByTagName("li");
+	for (var i = 0; i < lis.length; i++){
+		lis[i].className = ((i + 1) % 2 == 0)? "red" : "blue";
+	}
+	for (var i = 0; i < lis.length; i++){
+		lis[i].onmouseover = function() {
+			this.className = "green";
+		}
+		lis[i].index = i
+		lis[i].onmouseout = function() {
+			lis[this.index].className = ((this.index + 1) % 2 == 0)? "red" : "blue"; 
+		}
+	}
+}
+
+</script>
+</body>
+</html>

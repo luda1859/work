@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>一个按钮控制多个DIV样式</title>
+	<meta name="description" content="" />
+	<style>
+	/* clear folat */
+	.cf:before,
+	.cf:after {
+		content: " "; /* 1 */
+		display: table; /* 2 */
+	}
+	.cf:after {
+		clear: both;
+	}
+	.cf {
+		*zoom: 1;
+	}
+	div div {
+		width: 100px;
+		height: 100px;
+		color: #fff;
+		background-color: blue;
+		margin: 10px;
+		float: left;
+	}
+	</style>
+</head>
+<body>
+<button id="bt">点击改变DIV样式</button>
+<div class="cf">
+	<div>改变背景色</div>
+	<div>改变宽度</div>
+	<div>改变高度</div>
+	<div>改变字体颜色</div>
+	<div>加边框</div>
+</div>
+<script>
+	var divs = document.getElementsByTagName("div");
+	var bts = document.getElementById("bt");
+	bts.onclick = function() {
+		divs[1].style.backgroundColor = "red";
+		divs[2].style.width = "200px";
+		divs[3].style.height = "200px";
+		divs[4].style.color = "red";
+		divs[5].style.border = "1px solid red";
+	}
+</script>
+</body>
+</html>
