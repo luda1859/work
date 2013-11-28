@@ -130,6 +130,7 @@
 	</div>
 </div>
 <script>
+/*
 	function tabsChange(buttons, contents) {
 		var btns = document.getElementById(buttons).getElementsByTagName("span");
 		var cons = document.getElementById(contents).getElementsByTagName("div");
@@ -146,6 +147,43 @@
 	for (var i = 0; i < names.length; i++){
 		tabsChange("btn"+i,"con"+i);
 	}
+*/
+function btnClass() {
+	var allTag = document.getElementsByTagName("*");
+	var allBtn = [];
+	for (var i = 0; i < allTag.length; i++){
+		if (allTag[i].className == "btn"){
+			allBtn.push(allTag[i]);
+		}
+	}
+	return allBtn;
+}
+function conClass() {
+	var allTag = document.getElementsByTagName("*");
+	var allCon = [];
+	for (var i = 0; i < allTag.length; i++){
+		if (allTag[i].className == "con"){
+			allCon.push(allTag[i]);
+		}
+	}
+	return allCon;
+}
+var a = btnClass();
+var b = conClass();
+for (var i = 0; i < a.length; i++){
+	a[i].index = i;
+	b[i].index = i;
+	var btns = a[i].getElementsByTagName("span");
+	var cons = b[i].getElementsByTagName("div");
+	cons[0].className = "con-display";
+	for (var j = 0; j < btns.length; j++){
+		btns[j].onclick = function () {
+			for(var j = 0 ; j < btns.length; j++) {
+				cons[j].className = (this == btns[j]) ? "con-display" : "";
+			}
+		}
+	}
+}
 </script>
 </body>
 </html>
