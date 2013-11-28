@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>我的主页</title>
+	<meta name="description" content="" />
+	<style>
+		div {
+			width: 400px;
+			height: 400px;
+			background-color: #006699;
+		}
+	</style>
+</head>
+<body>
+	<input type="text" name="" value="请输入数字" id="ipt" />
+	<button>复位</button>
+	<button>改变宽度</button>
+	<button>改变高度</button>
+	<button>change margin-top</button>
+	<button>change margin-right</button>
+	<button>change margin-bottom</button>
+	<button>change margin-left</button>
+	<div id="div"></div>
+<script>
+	var ipt = document.getElementById('ipt');
+	var btns = document.getElementsByTagName('button');
+	var div = document.getElementById('div');
+	var styles = ["none","width","height","marginTop","marginRight","marginBottom","marginLeft"];
+	for (var i = 0; i < styles.length; i++){
+		btns[i].index = i;
+		if (i == 0) {
+			btns[i].onclick = function() {
+				div.style.margin = "0";
+				div.style.height = "400px";
+				div.style.width = "400px";
+			}
+		} else {
+			btns[i].onclick = function() {
+				div.style[styles[this.index]] = ipt.value + "px"; //div.style.styles[this.index] 这种写法是错误的，[this.index]会产生歧义。
+			}
+		}
+	}
+	ipt.onclick = function() {
+		ipt.value = "";
+	}
+</script>
+</body>
+</html>

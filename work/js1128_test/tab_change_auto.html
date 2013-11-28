@@ -1,0 +1,151 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>我的主页</title>
+	<meta name="description" content="" />
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		.main {
+			margin: 5px 2px;
+			border: 1px solid #eee;
+			float: left;
+		}
+		.btn {
+
+			text-align: center;
+			*zoom: 1;
+		}
+		.btn:after {
+			clear: both;
+			content: " ";
+			display: table;
+		}
+		.btn span {
+			font: 24px arial;
+			color: #fff;
+			width: 80px;
+			height: 30px;
+			line-height: 30px;
+			border: 1px solid #ccc;
+			margin: 10px 5px; 
+			background-color: #c00;
+			float: left;
+		}
+		.con div{
+			text-align: center;
+			font: 300px arial;
+			display: none;
+		}
+		.con div.con-display {
+			display: block;
+		}
+	</style>
+</head>
+<body>
+<div class="main" name="abc">
+	<div id="btn0" class="btn">
+		<span>one</span>
+		<span>two</span>
+	</div>
+	<div id="con0" class="con">
+		<div>
+			<span>1</span>
+		</div>
+		<div>
+			<span>2</span>
+		</div>
+	</div>
+</div>
+<div class="main" name="abc">
+	<div id="btn1" class="btn">
+		<span>one</span>
+		<span>two</span>
+		<span>three</span>
+	</div>
+	<div id="con1" class="con">
+		<div>
+			<span>1</span>
+		</div>
+		<div>
+			<span>2</span>
+		</div>
+		<div>
+			<span>3</span>
+		</div>
+	</div>
+</div>
+<div class="main" name="abc">
+	<div id="btn2" class="btn">
+		<span>one</span>
+		<span>two</span>
+		<span>three</span>
+		<span>four</span>
+	</div>
+	<div id="con2" class="con">
+		<div>
+			<span>1</span>
+		</div>
+		<div>
+			<span>2</span>
+		</div>
+		<div>
+			<span>3</span>
+		</div>
+		<div>
+			<span>4</span>
+		</div>
+		<div>
+			<span>5</span>
+		</div>
+	</div>
+</div>
+<div class="main" name="abc">
+	<div id="btn3" class="btn">
+		<span>one</span>
+		<span>two</span>
+		<span>three</span>
+		<span>four</span>
+		<span>five</span>
+	</div>
+	<div id="con3" class="con">
+		<div>
+			<span>1</span>
+		</div>
+		<div>
+			<span>2</span>
+		</div>
+		<div>
+			<span>3</span>
+		</div>
+		<div>
+			<span>4</span>
+		</div>
+		<div>
+			<span>5</span>
+		</div>
+	</div>
+</div>
+<script>
+	function tabsChange(buttons, contents) {
+		var btns = document.getElementById(buttons).getElementsByTagName("span");
+		var cons = document.getElementById(contents).getElementsByTagName("div");
+		cons[0].className = "con-display";
+		for (var i = 0 ; i < btns.length; i++) {
+			btns[i].onclick = function () {
+				for(i = 0 ; i < btns.length; i++) {
+					cons[i].className = (this == btns[i]) ? "con-display" : "";
+				}
+			}
+		}
+	}
+	var names = document.getElementsByName('abc');
+	for (var i = 0; i < names.length; i++){
+		tabsChange("btn"+i,"con"+i);
+	}
+</script>
+</body>
+</html>

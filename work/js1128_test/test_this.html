@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>我的主页</title>
+	<meta name="description" content="" />
+</head>
+<body>
+<script>
+	function test(){
+		alert(this == window); // test这个函数没有所有者，因此this指向的是window。
+	}
+	test();
+
+	var obj = {};	// 声明了对象obj.
+	obj.a = function(){		// a相当于函数的名字。
+		alert(this == obj); 
+	}
+	obj.a();	// 此时this指向obj
+
+	obj.test1 = function(){		// test1相当于函数的名字。
+		alert(this == obj);
+		alert(this == window);
+	}
+	obj.test1();	// this指向obj。
+	var test2 = obj.test1;
+	test2();	// this指向windows。
+
+</script>
+</body>
+</html>

@@ -1,0 +1,128 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>我的主页</title>
+	<meta name="description" content="" />
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		body {
+			font: 12px "微软雅黑";
+		}
+		a {
+			color: #000;
+			text-decoration: none;
+		}
+		.tab-nav {
+			width: 234px;
+			height: 42px;
+			border: 1px solid red;
+			margin: 0 auto;
+		}
+		.tab-nav div {
+			float: left;
+			position: relative;
+		}
+		.tab-nav span{
+			display: block;
+			height: 42px;
+			width: 60px;
+			line-height: 42px;
+			padding-right: 18px;
+			text-align: center;
+			background: #fcfcfc url(images/bg.gif) 52px 19px no-repeat;
+		}
+		.nav-hover span {
+			background-color: #edeef0;
+		}
+		.nav-hover span a {
+			color: #ff8400;
+		}
+		.tab-nav ul {
+			width: 78px;
+			list-style-type: none;
+			background-color: #fff;
+			position: absolute;
+			top: 42px;
+			left: 0;
+			z-index: 1;
+			border: 1px solid #ebbe7a;
+			border-width: 0 1px;
+			display: none;
+		}
+		.tab-nav li {
+			height: 31px;
+			line-height: 31px;
+			padding-left: 15px;
+			border-bottom: 1px solid #ebbe7a;
+		}
+		.tab-nav li.subnav-hover {
+			background-color: #fff5da;
+		}
+		.subnav-hover a{
+			color: #ff8400;
+		}
+	</style>
+</head>
+<body>
+<div id="tab-nav" class="tab-nav">
+	<div>
+		<span><a href="#">微博</a></span>
+		<ul>
+			<li><a href="#" title="私信">私信</a></li>
+			<li><a href="#" title="评论">评论</a></li>
+			<li><a href="#" title="@我">@我</a></li>
+		</ul>
+	</div>
+	<div>
+		<span><a href="#">博客</a></span>
+		<ul>
+			<li><a href="#" title="博客评论">博客评论</a></li>
+			<li><a href="#" title="未读提醒">未读提醒</a></li>
+		</ul>
+	</div>
+	<div>
+		<span><a href="#">邮箱</a></span>
+		<ul>
+			<li><a href="#" title="免费邮箱">免费邮箱</a></li>
+			<li><a href="#" title="VIP邮箱">VIP邮箱</a></li>
+			<li><a href="#" title="企业邮箱">企业邮箱</a></li>
+		</ul>
+	</div>
+</div>
+<script>
+	var navTab = document.getElementById("tab-nav").getElementsByTagName("div");
+	var subnavTab = document.getElementById("tab-nav").getElementsByTagName("ul");
+	var subnavLi = document.getElementById("tab-nav").getElementsByTagName("li");
+	// 导航切换
+	for (var i = 0; i < navTab.length; i++){
+		navTab[i].onmouseover = function() {
+			for (var i = 0; i < navTab.length; i++){
+				subnavTab[i].style.display = (this == navTab[i]) ? "block" : "none";
+				navTab[i].className = (this == navTab[i]) ? "nav-hover" : "";
+			}
+		}
+		navTab[i].index = i;
+		navTab[i].onmouseout = function() {
+			subnavTab[this.index].style.display = "none";
+			navTab[this.index].className = "";
+		}
+	}
+	// 子导航切换
+	for (var i = 0 ; i < subnavLi.length; i++){
+		subnavLi[i].onmouseover = function() {
+			for (i = 0; i < subnavLi.length; i++){
+				subnavLi[i].className = (this == subnavLi[i]) ? "subnav-hover" : "";
+			}
+		}
+		subnavLi[i].index = i;
+		subnavLi[i].onmouseout = function() {
+			subnavLi[this.index].className = "";
+		}
+	}
+</script>
+</body>
+</html>
