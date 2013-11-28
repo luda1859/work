@@ -43,8 +43,6 @@ window.onload = function() {
 	var lis = document.getElementById("bs").getElementsByTagName("li");
 	for (var i = 0; i < lis.length; i++){
 		lis[i].className = ((i + 1) % 2 == 0)? "red" : "blue";
-	}
-	for (var i = 0; i < lis.length; i++){
 		lis[i].onmouseover = function() {
 			this.className = "green";
 		}
