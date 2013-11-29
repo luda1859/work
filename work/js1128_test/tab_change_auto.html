@@ -13,9 +13,9 @@
 			margin: 5px 2px;
 			border: 1px solid #eee;
 			float: left;
+			display: inline;
 		}
 		.btn {
-
 			text-align: center;
 			*zoom: 1;
 		}
@@ -34,8 +34,11 @@
 			margin: 10px 5px; 
 			background-color: #c00;
 			float: left;
+			display: inline;
 		}
 		.con div{
+			min-width: 100px;
+			_width: 100px;
 			text-align: center;
 			font: 300px arial;
 			display: none;
@@ -148,36 +151,37 @@
 		tabsChange("btn"+i,"con"+i);
 	}
 */
-function btnClass() {
+function btnClass(buttons) {
 	var allTag = document.getElementsByTagName("*");
 	var allBtn = [];
 	for (var i = 0; i < allTag.length; i++){
-		if (allTag[i].className == "btn"){
+		if (allTag[i].className == buttons){
 			allBtn.push(allTag[i]);
 		}
 	}
 	return allBtn;
 }
-function conClass() {
+function conClass(contents) {
 	var allTag = document.getElementsByTagName("*");
 	var allCon = [];
 	for (var i = 0; i < allTag.length; i++){
-		if (allTag[i].className == "con"){
+		if (allTag[i].className == contents){
 			allCon.push(allTag[i]);
 		}
 	}
 	return allCon;
 }
-var a = btnClass();
-var b = conClass();
+var a = btnClass("btn");
+var b = conClass("con");
 for (var i = 0; i < a.length; i++){
-	a[i].index = i;
-	b[i].index = i;
 	var btns = a[i].getElementsByTagName("span");
 	var cons = b[i].getElementsByTagName("div");
 	cons[0].className = "con-display";
 	for (var j = 0; j < btns.length; j++){
+		btns[j].index = i;
 		btns[j].onclick = function () {
+			var btns = a[this.index].getElementsByTagName("span");
+			var cons = b[this.index].getElementsByTagName("div");
 			for(var j = 0 ; j < btns.length; j++) {
 				cons[j].className = (this == btns[j]) ? "con-display" : "";
 			}
