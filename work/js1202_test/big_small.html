@@ -1,0 +1,110 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>我的主页</title>
+	<meta name="description" content="" />
+	<style>
+	* {
+		margin: 0;
+		padding: 0;
+	}
+	.outer {
+		width: 400px;
+		height: 200px;
+		border: 1px solid red;
+		overflow: scroll;
+	}
+	.inner {
+		width: 1200px;
+		height: 200px;
+	}
+	.wh {
+		width: 100px;
+		height: 100px;
+		background-color: red;
+	}
+	</style>
+</head>
+<body>
+<!--
+<div id="outer" class="outer">
+	<div id="inner" class="inner">
+		<p>EasyRecovery 是世界著名数据恢复公司 Ontrack 的技术杰作，它是一个威力非常强大的硬盘数据恢复工具。能够帮你恢复丢失的数据以及重建文件系统。EasyRecovery不会向你的原始驱动器写入任何东东，它主要是在内存中重建文件分区表使数据能够安全地传输到其他驱动器中。你可以从被病毒破坏或是已经格式化的硬盘中恢复数据。该软件可以恢复大于 8.4GB的硬盘。支持长文件名。被破坏的硬盘中像丢失的引导记录、BIOS参数数据块；分区表；FAT 表；引导区都可以由它来进行恢复。这个版本使用新的数据恢复引擎，并且能够对 ZIP 文件以及微软的 Office系列文档进行修复！Professioanl (专业) 版更是囊括了磁盘诊断、数据恢复、文件修复、E-mail 修复等全部 4 大类目 19 个项目的各种数据文件修复和磁盘诊断方案。EasyRecovery 是世界著名数据恢复公司 Ontrack 的技术杰作，它是一个威力非常强大的硬盘数据恢复工具。能够帮你恢复丢失的数据以及重建文件系统。EasyRecovery不会向你的原始驱动器写入任何东东，它主要是在内存中重建文件分区表使数据能够安全地传输到其他驱动器中。你可以从被病毒破坏或是已经格式化的硬盘中恢复数据。该软件可以恢复大于 8.4GB的硬盘。支持长文件名。被破坏的硬盘中像丢失的引导记录、BIOS参数数据块；分区表；FAT 表；引导区都可以由它来进行恢复。这个版本使用新的数据恢复引擎，并且能够对 ZIP 文件以及微软的 Office系列文档进行修复！Professioanl (专业) 版更是囊括了磁盘诊断、数据恢复、文件修复、E-mail 修复等全部 4 大类目 19 个项目的各种数据文件修复和磁盘诊断方案。EasyRecovery 是世界著名数据恢复公司 Ontrack 的技术杰作，它是一个威力非常强大的硬盘数据恢复工具。能够帮你恢复丢失的数据以及重建文件系统。EasyRecovery不会向你的原始驱动器写入任何东东，它主要是在内存中重建文件分区表使数据能够安全地传输到其他驱动器中。你可以从被病毒破坏或是已经格式化的硬盘中恢复数据。该软件可以恢复大于 8.4GB的硬盘。支持长文件名。被破坏的硬盘中像丢失的引导记录、BIOS参数数据块；分区表；FAT 表；引导区都可以由它来进行恢复。这个版本使用新的数据恢复引擎，并且能够对 ZIP 文件以及微软的 Office系列文档进行修复！Professioanl (专业) 版更是囊括了磁盘诊断、数据恢复、文件修复、E-mail 修复等全部 4 大类目 19 个项目的各种数据文件修复和磁盘诊断方案。</p>
+	</div>
+</div>
+-->
+<div id="wh" class="wh"></div>
+<script>
+	var wh = document.getElementById('wh');
+	/* 方法一
+	var i = 100;
+	var j;
+	wh.onclick = a;
+	function a() {
+		if ( i < 500){
+			i+=2;
+			wh.style.width = i + "px";
+			wh.style.height = i + "px";
+			setTimeout(a,17);
+		} else {
+			j = i;
+			i = 100;
+			b();
+		}
+	}
+	function b() {
+		if ( j > 100){
+			j-=2;
+			wh.style.width = j + "px";
+			wh.style.height = j + "px";
+			setTimeout(b,17);
+		} else {
+			i = j;
+			j = 500;
+			a();
+		}
+	}*/
+	/* 方法二
+	var i = 100;
+	var k = 0;
+	function a() {
+		if (i == 100){
+			k = 1;
+		}
+		if (i == 500){
+			k = -1;
+		}
+		i+=k;
+		wh.style.width = i + "px";
+		wh.style.height = i + "px";
+		setTimeout(a,17);
+	}
+	wh.onclick = a;
+	*/
+	// 方法三
+	var i = 100;
+	var x = true;
+	function a() {
+		if(x) {
+			if (i <= 500){
+				i++;
+			} else {
+				x = false;
+			}
+		} else {
+			if (i >= 100){
+				i--;
+				
+			} else {
+				x = true;
+			}
+		}
+		wh.style.width = i + "px";
+		wh.style.height = i + "px";
+		setTimeout(a, 17);
+	}
+	a();
+</script>
+</body>
+</html>

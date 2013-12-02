@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>我的主页</title>
+	<meta name="description" content="" />
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		body {
+			background-color: #000;
+		}
+		img {
+			vertical-align: top;
+			border: none;
+			height: 400px;
+			width: 600px;
+			float: left;
+		}
+		.outer {
+			width: 900px;
+			height: 400px;
+			overflow: hidden;
+			margin: 10px auto;
+		}
+		.inner {
+			width: 4800px;
+			height: 400px;
+		}
+	</style>
+</head>
+<body>
+<div id="outer" class="outer">
+	<div id="inner" class="inner">
+		<img src="images/001.jpg" alt="野生动物" title="野生动物" />
+		<img src="images/002.jpg" alt="野生动物" title="野生动物" />
+		<img src="images/003.jpg" alt="野生动物" title="野生动物" />
+		<img src="images/004.jpg" alt="野生动物" title="野生动物" />
+		<img src="images/005.jpg" alt="野生动物" title="野生动物" />
+		<img src="images/006.jpg" alt="野生动物" title="野生动物" />
+		<img src="images/007.jpg" alt="野生动物" title="野生动物" />
+		<img src="images/008.jpg" alt="野生动物" title="野生动物" />
+	</div>
+</div>
+<script>
+	var outer = document.getElementById('outer');
+	var inner = document.getElementById('inner');
+	function pic() {
+		outer.scrollLeft += 10;
+		setTimeout(pic, 17);
+		if (outer.scrollLeft == 3900){
+			outer.scrollLeft = 0;
+		}
+	}
+	pic();                                                                                      
+</script>
+</body>
+</html>
