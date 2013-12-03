@@ -1,0 +1,203 @@
+﻿1.js发展历史。
+答：
+
+2.js和java的关系
+答：没关系
+
+3.什么规范规定了JS的语法
+答：ECMAscript
+
+4.JS引入方式
+答：外部引入、头部引入、底部引入。
+
+5.JS命名规范
+答：只能用字母、数字、下划线和$，第一个字符不能是数字；小驼峰式的写法；区分大小写；不可用保留字符。
+
+6.JS书写规范
+答：区分大小写；注意缩进；操作符前后要空格；单行代码过长要换行；开始的大括号要和if等在一行。
+
+7.JS关键字保留字能说几个
+答：class var function if else switch case for do while float in
+ 
+8.JS数据类型有哪些
+答：数字、字符串、布尔值、null、undefined、object
+
+9.i++和++i的区别
+答：i++ 先执行，后运算 ++i先运算，后执行
+
+10.1+”1”==?
+答：11
+
+11.1+1 ==?
+答：2
+
+12.1-“1”==?
+答：0
+
+13.JS是强变量还是弱变量
+答：弱变量，可以随意转变数据类型。
+
+14.变量在JS中进行==和===判断的区别是？
+答：===比==多判断一项数据类型是否相同。
+
+15.当两个不同类型的数据进行==判断，浏览器是如何执行的？如1==“1”
+答：把数字转换成字符串，然后比较。
+
+16.说下下面的值1==“1”   2==true   1 == {}   {}=={}
+答： true false false false
+
+17.写代码，展示什么是句柄什么是语句
+答： 
+a.onclick = function() {...} // function() {...}是句柄。
+a.onclick = test; // test是句柄。
+function test() {...}
+
+18.如何判断一个变量是奇数还是偶数
+答：if (x%2 == 0){alert("偶数")}else{alert("奇数")}
+
+19.JS注释方式。有哪些最佳实践（最佳实践就是怎么做最推荐）
+答：单行注释用//，多行注释用/* ... */。
+单行注释：
+alert(1); // 弹出1。
+多行注释：
+	/********
+  	 *alert(1);
+	 *alert(2);
+	 *alert(3);
+	 *********/
+
+20.break和continue的区别;
+答：break直接跳出循环。continue是跳过循环里后面的代码，继续循环。
+
+21.写一个1到10的递增循环
+答：for(var i = 1; i <= 10; i++){}
+
+22.什么是全局变量，什么是局部变量
+答：全局变量：所有函数都可以调用的变量；局部变量：只有函数内能够调用的变量。
+
+22.var a = 3;alert(a === window.a);弹什么
+答：true
+
+23.介绍下作用域。
+答：
+
+24.如何绑定事件
+答：a.onclick = function() {...};
+
+25.window.onload干嘛用的？如果不写怎么样
+答：整个网页加载完毕后开始执行JS代码。如果js代码写在头部，那就会先运行JS代码，导致错误。
+
+26.说下面代码执行结果：
+	var tt = 'aa'; 
+	function test(){ 
+	alert(tt); 
+	var tt = 'dd'; 
+	alert(tt); 
+	} 
+	test(); 
+答：弹出aa,弹出dd
+
+27.下面的写法的意思是，声明一个匿名函数，并立即执行：
+	(function() {
+	  alert(1);
+     })();
+
+28.根据上题说明，说出下面的执行结果：
+	var foo = 'hello';
+     (function() {
+	var foo = foo || 'world';
+	console.log(foo);
+         })();
+答：world （因为函数内的foo是局部变量，初始值为undefined）
+
+29.说下你了解的this
+答：a.onclick = function() {this};这里的this代表a
+
+30.如何修改class名
+答：
+var a = document.getElementsByTagName('a');
+a.className = "class名"；
+
+31.获取标签的几种方式说一下
+答：
+通过ID获取：
+var a = document.getElementById("a");
+通过标签名获取：
+var b = document.getElementsByTagName("a");
+通过name获取：
+var c = document.getElementsByName("a");
+
+32.如何获取一个div内部的HTML
+答：
+var a = document.getElementById("div").innerHTML;
+
+33.如何获取一个div外部的HTML，它有什么问题？
+答：
+var a = document.getElementById("div").outerHTML;
+没发现什么问题。
+
+34.如何获取一个input的value
+答：
+var iptVal = document.getElementById("ipt").vaule;
+
+35.如何修改一个img的src
+答：
+var img = document.getElementById("img");
+img.src = "...";
+
+36.如何获取一个div的scrollLeft值？写给谁？
+var div = document.getElementById("div").scrollLeft;
+
+37.计时器有哪些？怎么书写？参数有哪几种书写形式
+答：
+setTimeout(句柄,数字)
+setInterval(句柄,数字)
+说明：数字的单位是毫秒。
+三种书写方式：
+setTimeout(function(){...},1000)
+setTimeout(test,1000)
+setTimeout("test(a)",1000)
+
+38.两种计时器的区别是什么？
+答：
+setTimeout只执行一次，并且比较精确。
+setInterval循环执行，精度稍差。
+
+39.写个简单的代码，1秒弹一个数字
+答：
+<script>
+	function a() {
+		alert(1);
+	}
+	setTimeout(a, 1000);
+</script>
+
+
+如何判断一个变量是不是string
+
+如何判断一个变量是不是boolean
+if (a === true || a === false){};
+
+如何判断一个变量是不是数字
+if (!isNum(a)) {不是数字} else {是数字}
+
+如何判断一个变量是不是NaN
+if (a === NaN){};
+
+如何判断null
+if (a === null){};
+
+如何判断一个变量是不是undefined
+if (a === undefined){};
+
+如何创建数组
+var a = [];
+
+如何访问数组第三项
+a[2]
+
+有一个数组，里面都是数字，写一段代码，把这个数组里面所有的数字都+1.
+var a = [2,3,4,5,6]
+for (var i = 0; i < a.length; i++){
+	a[i] += 1;
+}

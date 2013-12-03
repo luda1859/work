@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>我的主页</title>
+	<meta name="description" content="" />
+</head>
+<body>
+	<div>
+		<button>开始计时</button>
+		<button>停止计时</button>
+		<button>清零</button>
+	</div>
+	<div id="div">
+		<strong style="font: 100px arial;">00:00:00</strong>
+	</div>
+	<script>
+	var btns = document.getElementsByTagName('button');
+	var times = document.getElementsByTagName('strong');
+	var a = "00";
+	var b = "00";
+	var c = "00";
+	var d;
+	function time() {
+		c++;
+		if (c <= 9){
+			c = "0" + c;
+		}
+		if (c == 100){
+			b ++;
+			if (b <= 9){
+				b = "0" + b;
+			}
+			c = "00"
+			if (b == 60){
+				a++;
+				if (a <= 9){
+					a = "0" + a;
+				}
+				b = "00";
+			}
+		}
+		times[0].innerHTML = a + ":" + b + ":" + c;
+		d = setTimeout(time, 10);
+	}
+	btns[0].onclick = function() {
+		setTimeout(time ,10);
+	}
+	btns[1].onclick = function() {
+		clearTimeout(d);
+	}
+	btns[2].onclick = function() {
+		clearTimeout(d);
+		a = "00";
+		b = "00";
+		c = "00";
+		times[0].innerHTML = a + ":" + b + ":" + c;
+	}
+</script>
+</body>
+</html>
