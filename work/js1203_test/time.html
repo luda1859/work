@@ -8,7 +8,7 @@
 <body>
 	<div>
 		<button>开始计时</button>
-		<button>停止计时</button>
+		<button style="display: none">停止计时</button>
 		<button>清零</button>
 	</div>
 	<div id="div">
@@ -44,10 +44,14 @@
 		d = setTimeout(time, 10);
 	}
 	btns[0].onclick = function() {
-		setTimeout(time ,10);
+		setTimeout(time, 10);
+		btns[0].style.display = "none";
+		btns[1].style.display = "inline";
 	}
 	btns[1].onclick = function() {
 		clearTimeout(d);
+		btns[0].style.display = "inline";
+		btns[1].style.display = "none";
 	}
 	btns[2].onclick = function() {
 		clearTimeout(d);
