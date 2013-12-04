@@ -1,0 +1,98 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>我的主页</title>
+	<meta name="description" content="" />
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		body {
+			background-color: #000;
+		}
+		img {
+			vertical-align: top;
+			border: none;
+			height: 200px;
+			width: 300px;
+			float: left;
+		}
+		.outer {
+			width: 900px;
+			height: 200px;
+			overflow: hidden;
+			float: left;
+		}
+		.inner {
+			width: 3000px;
+			height: 200px;
+		}
+		.btn {
+			width: 20px;
+			height: 200px;
+			line-height: 200px;
+			text-align: center;
+			background-color: #333;
+			color: #fff;
+			float: left;
+		}
+		.main {
+			width: 940px;
+			margin: 10px auto;
+		}
+	</style>
+</head>
+<body>
+<div class="main">
+	<div id="leftBtn" class="btn">&lt;</div>
+		<div id="outer" class="outer">
+			<div id="inner" class="inner">
+				<img src="images/001.jpg" alt="野生动物" title="野生动物" />
+				<img src="images/002.jpg" alt="野生动物" title="野生动物" />
+				<img src="images/003.jpg" alt="野生动物" title="野生动物" />
+				<img src="images/004.jpg" alt="野生动物" title="野生动物" />
+				<img src="images/005.jpg" alt="野生动物" title="野生动物" />
+			</div>
+		</div>
+		<div id="rightBtn" class="btn">&gt;</div>
+	</div>
+<script>
+	var outer = document.getElementById('outer');
+	var inner = document.getElementById('inner');
+	var leftBtn = document.getElementById('leftBtn');
+	var rightBtn = document.getElementById('rightBtn');
+	inner.innerHTML += inner.innerHTML; // 复制一份所有图片代码.
+	var t = null; // 表明这可能是一个对象
+	var speed = 1; // 表示速度
+	function pic() {
+		if (t) { // 防止没有声明变量t时报错。
+			clearTimeout(t); // 先清除计时器，防止多次点击加速。
+		}
+		outer.scrollLeft += speed;
+		// 当speed为负值，且outer.scrollLeft等于0时，会陷入死循环
+		if ((outer.scrollLeft % 300 == 0) && outer.scrollLeft > 0 ) {
+			clearTimeout(t);
+			setTimeout(pic, 1500);
+			return; // 执行if后返回，阻止下面代码继续执行。
+		}
+		t = setTimeout(pic, 17);
+		if (speed > 0 && (outer.scrollLeft >= inner.offsetWidth / 2)){
+				outer.scrollLeft -= (inner.offsetWidth / 2); 
+				// 当第一部分图片完全滚动过去后，瞬间将第一部分图片的滚动归0。不能直接设置为0，防止跳动。
+		} else if (speed < 0 && outer.scrollLeft <= 0) {
+				outer.scrollLeft = (inner.offsetWidth / 2);
+		}
+	}
+	leftBtn.onclick = function () {
+		speed = 1;
+		pic();
+	}
+	rightBtn.onclick = function () {
+		speed = -1;
+		pic();
+	}
+</script>
+</body>
+</html>

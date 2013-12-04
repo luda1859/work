@@ -1,0 +1,105 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>我的主页</title>
+	<meta name="description" content="" />
+	<style>
+		.outer {
+			width: 980px;
+			height: 500px;
+			position: relative;
+			border: 1px solid red;
+		}
+		.inner {
+			width: 100px;
+			height: 100px;
+			background-color: green;
+			position: absolute;
+			top: 0;
+			left: 0;
+			z-index: 1;
+		}
+	</style>
+</head>
+<body>
+	<div id="outer" class="outer">
+		<div id="inner" class="inner"></div>
+	</div>
+	<script>
+	/*
+		var outer = document.getElementById('outer');
+		var inner = document.getElementById('inner');
+		var i = 0;
+		var j = 0;
+		var x;
+		var y;
+		function one() {
+			if (i == outer.clientWidth - inner.offsetWidth){
+				x = -1;
+			}
+			if (i == 0){
+				x = 1;
+			}
+			if (j == outer.clientHeight - inner.offsetHeight){
+				y = -1;
+			}
+			if (j == 0){
+				y = 1;
+			}
+			i += x;
+			j += y;
+			inner.style.left = i + "px";
+			inner.style.top = j + "px";
+			setTimeout(one, 17);
+		}
+		one();
+	*/
+	var outer = document.getElementById('outer');
+	var inner = document.getElementById('inner');
+	var posX = 0;
+	var posY = 0;
+	var time = null;
+	var moveX = true;
+	var moveY = true;
+	window.onload = pos;
+	function pos() {
+		inner.style.left = posX + "px";
+		inner.style.top = posY + "px";
+	}
+	function move() {
+		if (moveX){
+			if(posX > 0){
+				posX--;
+				inner.style.left = posX + "px";
+			} else {
+				moveX = false;
+			}
+		} else {
+			if (posX < outer.clientWidth - inner.offsetWidth){
+				posX++;
+				inner.style.left = posX + "px";
+			} else {
+				moveX = true;
+			}
+		} 
+		if (moveY){
+			if(posY > 0){
+				posY--;
+				inner.style.top = posY + "px";
+			} else {
+				moveY = false;
+			}
+		} else {
+			if(posY < outer.clientHeight - inner.offsetHeight){
+				posY++;
+				inner.style.top = posY + "px";
+			} else {
+				moveY = true;
+			}
+		}
+	}
+	time = setInterval(move,17);
+	</script>
+</body>
+</html>

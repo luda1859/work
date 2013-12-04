@@ -1,0 +1,220 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>滚动效果计时器</title>
+	<meta name="description" content="" />
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		/* clear folat */
+		.cf:before,
+		.cf:after {
+			content: " ";
+			display: table;
+		}
+		.cf:after {
+			clear: both;
+		}
+		.cf {
+			*zoom: 1;
+		}
+		body {
+			background-color: #000;
+		}
+		.time {
+			width: 510px;
+			height: 200px;
+			margin: 100px auto 0px auto;
+		}
+		.time strong {
+			display: block;
+			width: 150px;
+			height: 120px;
+			line-height: 120px;
+			text-align: center;
+			font: 100px arial;
+			background-color: #eee;
+		}
+		.time span {
+			float: left;
+			font: 100px arial;
+			width: 30px;
+			height: 120px;
+			line-height: 120px;
+			text-align: center;
+			color: #fff;
+		}
+		.hour,.min,.sec {
+			width: 150px;
+			height: 120px;
+			float: left;
+			overflow: hidden;
+		}
+		.btn {
+			width: 426px;
+			margin: 0 auto;
+		}
+		.btn button{
+			float: left;
+			width: 100px;
+			height: 30px;
+			line-height: 30px;
+			text-align: center;
+			background-color: red;
+			color: #fff;
+			margin: 0 20px;
+			border: 1px solid #999;
+		}
+	</style>
+</head>
+<body>
+
+	<div id="time" class="time cf">
+		<div id="hourOut" class="hour">
+			<div id="hourIn">
+				<strong>01</strong>
+				<strong>00</strong>
+			</div>
+		</div>
+		<span>:</span>
+		<div id="minOut" class="min">
+			<div id="minIn">
+				<strong>01</strong>
+				<strong>00</strong>
+			</div>
+		</div>
+		<span>:</span>
+		<div id="secOut" class="sec">
+			<div id="secIn">
+				<strong>01</strong>
+				<strong>00</strong>
+			</div>
+		</div>
+	</div>
+	<div id="timeBtn" class="btn cf">
+		<button>开始计时</button>
+		<button>暂停计时</button>
+		<button>清零</button>
+	</div>
+	<script>
+	var timeBtns = document.getElementById('timeBtn').getElementsByTagName('button')
+	var hourOut = document.getElementById('hourOut');
+	var hourIn = document.getElementById('hourIn');
+	var hourInner = hourIn.getElementsByTagName('strong');
+	var minOut = document.getElementById('minOut');
+	var minIn = document.getElementById('minIn');
+	var minInner = minIn.getElementsByTagName('strong');
+	var secOut = document.getElementById('secOut');
+	var secIn = document.getElementById('secIn');
+	var secInner = secIn.getElementsByTagName('strong');
+	var tHour = null;	// 小时计时器
+	var tMin = null;	// 分钟计时器
+	var tSec = null;	// 秒计时器
+	var tSec1 = null;	// 秒计时器
+	var hours = 0; 
+	var mins = 0;
+	var secs = 0;
+	hourOut.scrollTop = hourIn.offsetHeight;
+	minOut.scrollTop = minIn.offsetHeight;
+	secOut.scrollTop = secIn.offsetHeight;
+	// 判断个位数时前面加0，且等于60时变为00;
+	function add (num) {
+		if (num == 60){
+			return "00";
+		}
+		if (num <= 9){
+			return "0" + num;
+		} else {
+			return num;
+		}
+	}
+	// 判断个位数时前面加0;
+	function add0 (num) {
+		if (num <= 9){
+			return "0" + num;
+		} else {
+			return num;
+		}
+	}
+	// 秒表滚动
+	function moveSec(){
+		secOut.scrollTop -= 6;
+		if (secOut.scrollTop == 0){
+			clearTimeout(tSec);
+			tSec1 = setTimeout(moveSec, 400);
+			secs++;
+			secInner[0].innerHTML = add(secs + 1);
+			secInner[1].innerHTML = add(secs);
+			secOut.scrollTop = secIn.offsetHeight;
+				if (secs == 60){
+					secs = 0;
+					moveMin();
+				}
+			return;
+		}
+		tSec = setTimeout(moveSec, 30)
+	}
+	// 分钟滚动
+	function moveMin () {
+		minOut.scrollTop -= 6;
+		if (minOut.scrollTop == 0){
+			clearTimeout(tMin);
+			mins++;
+			minInner[0].innerHTML = add(mins + 1);
+			minInner[1].innerHTML = add(mins);
+			minOut.scrollTop = minIn.offsetHeight;
+				if (mins == 60){
+					mins = 0;
+					moveHour();
+				}
+			return;
+		}
+		tMin = setTimeout(moveMin, 30)
+	}
+	// 小时滚动
+	function moveHour () {
+		hourOut.scrollTop -= 6;
+		if (hourOut.scrollTop == 0){
+			clearTimeout(tHour);
+			hours++;
+			hourInner[0].innerHTML = add0(hours + 1);
+			hourInner[1].innerHTML = add0(hours);
+			hourOut.scrollTop = hourIn.offsetHeight;
+			return;
+		}
+		tHour = setTimeout(moveHour, 30)
+	}
+	// 开始计时
+	timeBtns[0].onclick = function() {
+		clearTimeout(tSec);
+		clearTimeout(tSec1);
+		moveSec();
+	}
+	// 暂停计时
+	timeBtns[1].onclick = function() {
+		clearTimeout(tSec);
+		clearTimeout(tSec1);
+	}
+	// 清零
+	timeBtns[2].onclick = function() {
+		clearTimeout(tSec);
+		clearTimeout(tSec1);
+		hourOut.scrollTop = hourIn.offsetHeight;
+		minOut.scrollTop = minIn.offsetHeight;
+		secOut.scrollTop = secIn.offsetHeight;
+		hourInner[1].innerHTML = "00";
+		minInner[1].innerHTML = "00";
+		secInner[1].innerHTML = "00";
+		hourInner[0].innerHTML = "01";
+		minInner[0].innerHTML = "01";
+		secInner[0].innerHTML = "01";
+		hours = 0; 
+		mins = 0;
+		secs = 0;
+	}
+</script>
+</body>
+</html>
