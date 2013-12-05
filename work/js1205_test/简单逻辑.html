@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>我的主页</title>
+	<meta name="description" content="" />
+	<style>
+		div {
+			height: 100px;
+			width: 100px;
+			background-color: red;
+		}
+	</style>
+</head>
+<body>
+	<div id="test"></div>
+	<script>
+		var test = document.getElementById('test');
+		function moveTo(start,end,duration,dom,prop) {
+			//var start = 0;		// 起点。
+			//var end = 100;		// 终点。
+			//var duration = 20;	// 执行步数。
+			//var dom;				// 需要执行修改的标签。
+			//var prop;				// 需要修改的样式名。
+			var speed = (end - start) / duration;	//计算速度，可以为负值。
+			var x = start;			//运动中动态计算用的变量，初值为起始位置值。
+			var tprop = "_t_" + prop;	// "_t_width" 为dom设置不同下标，来表示不同变量。
+			// 判断：如果dom[tprop]有值，就停止这个计时器 （dom[tprop]代表计时器的变量）。
+			if (dom[tprop]){
+				clearInterval(dom[tprop]);
+			}
+			/********************************************************************
+			 *当同时运行多次修改同一个样式时，本函数会同时多次执行，发生冲突。  *
+			 *加个变量 dom[tprop]（如：test[_t_width]），那么，同时修改width时。*   
+			 *后面的函数发现前面的函数在同时运行，就会停止前面的函数，并开始执行*
+			 *自己。															*
+			 ********************************************************************/
+			dom[tprop] = setInterval (function(){
+				x += speed;
+				// 判断运动是否完成。
+				if ((speed > 0 && x >= end) || 
+					(speed < 0 && x <= end)){
+					x = end; // 防止运动完成后，值超出end。
+					clearInterval(dom[tprop]); // 完成运动，停止计时器。
+				}
+				dom.style[prop] = x + "px";
+			}, 17)
+		}
+		moveTo(0,500,1000,test,"marginLeft");
+		setTimeout(function() {
+			moveTo(500,0,100,test,"marginLeft");
+		},1000)
+	</script>
+</body>
+</html>

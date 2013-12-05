@@ -1,0 +1,219 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>我的主页</title>
+	<meta name="description" content="" />
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		body {
+			background-color: #000;
+		}
+		.door {
+			width: 400px;
+			height: 150px;
+			border: 5px solid #fff;
+			border-bottom-width: 0;
+			margin: 150px auto 0 auto;
+			position: relative;
+			z-index: 100;
+		}
+		img {
+			position: absolute;
+			top: 400px;
+			left: -100px;
+			z-index: 10;
+			height: 50px;
+			width: 50px;
+		}
+		span {
+			display: block;
+			width: 300px;
+			font: 24px "微软雅黑";
+			font-weight: bold;
+			text-align: center;
+		}
+		.noclick {
+			position: absolute;
+			top: -100px;
+			left: -100px;
+			z-index: 5;
+			width: 1200px;
+			height: 800px;
+		}
+		.red {
+			position: absolute;
+			top: 405px;
+			left: -60px;
+			z-index: 10;
+			color: red;
+		}
+		.blue {
+			position: absolute;
+			top: 80px;
+			left: 50px;
+			z-index: 10;
+			color: red;
+			display: none;
+		}
+		.yellow {
+			position: absolute;
+			top: -120px;
+			left: 60px;
+			z-index: 10;
+			font: 34px "微软雅黑";
+			color: red;
+			display: none;
+		}
+		.block {
+			height: 1000px;
+			background-color: green;
+			z-index: 1;
+		}
+	</style>
+</head>
+<body>
+	<div class="door">
+		<img id="ball" src="images/football.gif" alt="Football" />
+		<span class="noclick">&nbsp;</span>
+		<span id="red" class="red">&lt;&lt;--点击左侧足球射门</span>
+		<span id="blue" class="blue">再玩一次</span>
+		<span id="yellow" class="yellow">球进了！！</span>
+	</div>
+	<div class="block">
+	</div>
+	<script>
+		var ball = document.getElementById('ball');
+		var spana = document.getElementById('red');
+		var spanb = document.getElementById('blue');
+		var spanc = document.getElementById('yellow');
+		function moveTo(start,end,duration,dom,prop) {
+			//var start = 0;		// 起点。
+			//var end = 100;		// 终点。
+			//var duration = 20;	// 执行步数。
+			//var dom;				// 需要执行修改的标签。
+			//var prop;				// 需要修改的样式名。
+			var speed = (end - start) / duration;	//计算速度，可以为负值。
+			var x = start;			//运动中动态计算用的变量，初值为起始位置值。
+			var tprop = "_t_" + prop;	// "_t_width" 为dom设置不同下标，来表示不同变量。
+			// 判断：如果dom[tprop]有值，就停止这个计时器 （dom[tprop]代表计时器的变量）。
+			if (dom[tprop]){
+				clearInterval(dom[tprop]);
+			}
+			/********************************************************************
+			 *当同时运行多次修改同一个样式时，本函数会同时多次执行，发生冲突。  *
+			 *加个变量 dom[tprop]（如：test[_t_width]），那么，同时修改width时。*   
+			 *后面的函数发现前面的函数在同时运行，就会停止前面的函数，并开始执行*
+			 *自己。															*
+			 ********************************************************************/
+			dom[tprop] = setInterval (function(){
+				x += speed;
+				// 判断运动是否完成。
+				if ((speed > 0 && x >= end) || 
+					(speed < 0 && x <= end)){
+					x = end; // 防止运动完成后，值超出end。
+					clearInterval(dom[tprop]); // 完成运动，停止计时器。
+				}
+				dom.style[prop] = x + "px";
+			}, 17)
+		}
+		var t = setInterval(function() {
+			moveTo(24,25,5,spana,"font-size");
+			setTimeout(function() {
+				moveTo(25,24,5,spana,"font-size");
+			},85)
+		},500)
+		var t1;
+		ball.onclick = function() {
+			clearInterval(t);
+			spana.style.display = "none";
+			ball.style.zIndex = "1";
+			moveTo(50,20,102,ball,"width");
+			moveTo(50,20,102,ball,"height");
+			moveTo(-100,400,30,ball,"left");
+			moveTo(400,80,30,ball,"top");
+			setTimeout(function() {
+				moveTo(400,430,10,ball,"left");
+				moveTo(80,40,10,ball,"top");
+			}, 510)
+			setTimeout(function() {
+				moveTo(430,450,10,ball,"left");
+				moveTo(40,0,10,ball,"top");
+			}, 680)
+			setTimeout(function() {
+				moveTo(450,460,9,ball,"left");
+				moveTo(0,-25,9,ball,"top");
+			}, 833)
+			setTimeout(function() {
+				moveTo(460,450,10,ball,"left");
+				moveTo(-25,-35,10,ball,"top");
+			}, 1003)
+			setTimeout(function() {
+				moveTo(450,420,10,ball,"left");
+				moveTo(-35,-25,10,ball,"top");
+			}, 1173)
+			setTimeout(function() {
+				moveTo(420,380,9,ball,"left");
+				moveTo(-25,-10,9,ball,"top");
+			}, 1326)
+			setTimeout(function() {
+				moveTo(380,350,8,ball,"left");
+				moveTo(-10,0,8,ball,"top");
+			}, 1482)
+			setTimeout(function() {
+				moveTo(350,320,8,ball,"left");
+				moveTo(0,10,8,ball,"top");
+			}, 1598)
+			setTimeout(function() {
+				moveTo(320,280,20,ball,"left");
+				moveTo(10,130,20,ball,"top");
+			}, 1734)
+			setTimeout(function() {
+				moveTo(280,260,16,ball,"left");
+				moveTo(130,90,16,ball,"top");
+			}, 2040)
+			setTimeout(function() {
+				moveTo(260,240,12,ball,"left");
+				moveTo(90,130,12,ball,"top");
+			}, 2312)
+			setTimeout(function() {
+				moveTo(240,220,8,ball,"left");
+				moveTo(130,110,8,ball,"top");
+			}, 2516)
+			setTimeout(function() {
+				moveTo(220,210,4,ball,"left");
+				moveTo(110,130,4,ball,"top");
+			}, 2652)
+			setTimeout(function() {
+				moveTo(210,200,30,ball,"left");
+			}, 2720)
+			setTimeout(function() {
+				t1 = setInterval(function() {
+					moveTo(34,36,5,spanc,"font-size");
+					setTimeout(function() {
+						moveTo(36,34,5,spanc,"font-size");
+					},85)
+				},300)
+				spanc.style.display = "block";
+			}, 1734)
+			setTimeout(function() {
+				spanb.style.display = "block";
+				spanc.style.display = "none";
+				clearInterval(t1);
+			}, 4000)
+		}
+		spanb.onclick = function(){
+			spana.style.display = "block";
+			spanb.style.display = "none";
+			ball.style.left = "-100px";
+			ball.style.top = "400px";
+			ball.style.width = "50px";
+			ball.style.height = "50px";
+			ball.style.zIndex = "10";
+		}
+	</script>
+</body>
+</html>
