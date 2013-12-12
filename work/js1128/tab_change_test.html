@@ -67,7 +67,7 @@
 		
 	}
 	*/
-	/* 方法3：
+	
 	for (var i = 0; i < btns.length; i++){
 		btns[i].index = i;
 		btns[i].onmouseover = function() {
@@ -77,7 +77,7 @@
 			divs[this.index].style.display = "block";
 		}
 	}
-	*/
+	
 	// 方法4：
 	/*
 	function onMouseOver(){
@@ -89,6 +89,7 @@
 		btns[i].onmouseover = onMouseOver;
 	}
 	*/
+	/*
 	function onMouseOver(){
 		for (var i = 0; i < btns.length; i++){
 			divs[i].style.display = (this === btns[i]) ? "block" : "none";	
@@ -97,7 +98,7 @@
 	
 	for (var i = 0; i < btns.length; i++){
 		btns[i].onmouseover = onMouseOver;
-	}
+	}*/
 </script>
 </body>
 </html>

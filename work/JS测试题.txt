@@ -5,7 +5,7 @@
 答：没关系
 
 3.什么规范规定了JS的语法
-答：ECMAscript
+答：ECMA-262
 
 4.JS引入方式
 答：外部引入、头部引入、底部引入。
@@ -20,10 +20,10 @@
 答：class var function if else switch case for do while float in
  
 8.JS数据类型有哪些
-答：数字、字符串、布尔值、null、undefined、object
+答：数字、字符串、布尔值、null、undefind、object
 
 9.i++和++i的区别
-答：i++ 先执行，后运算 ++i先运算，后执行
+答：i++ 先赋值，后运算 ++i先运算，后赋值
 
 10.1+”1”==?
 答：11
@@ -95,7 +95,7 @@ alert(1); // 弹出1。
 	alert(tt); 
 	} 
 	test(); 
-答：弹出aa,弹出dd
+答：弹出undefind,弹出dd
 
 27.下面的写法的意思是，声明一个匿名函数，并立即执行：
 	(function() {
@@ -134,7 +134,7 @@ var a = document.getElementById("div").innerHTML;
 33.如何获取一个div外部的HTML，它有什么问题？
 答：
 var a = document.getElementById("div").outerHTML;
-没发现什么问题。
+firefox不支持。
 
 34.如何获取一个input的value
 答：
