@@ -1,0 +1,133 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>我的主页</title>
+	<meta name="description" content="" />
+	<style>
+		.img-s {
+			width: 350px;
+			height: 350px;
+			border: 1px solid #ccc;
+			position: relative;
+			margin: 100px 50px;
+		}
+		.move {
+			width: 173px;
+			height: 173px;
+			border: 1px solid #ccc;
+			background-color: #ff9000;
+			opacity: 0.5;
+			filter:alpha(opacity=50);
+			position: absolute;
+			top: 0;
+			left: 0;
+			z-index: 1;
+			cursor: move;
+			display: none;
+		}
+		.img-big {
+			width: 400px;
+			height: 400px;
+			border: 1px solid #CCC;
+			overflow: hidden;
+			position: absolute;
+			top: -1px;
+			left: 370px;
+			z-index: 1;
+			display: none;
+		}
+		.img-big img {
+			width: 800px;
+			height: 800px;
+		}
+		img {
+			vertical-align: top;
+		}
+	</style>
+</head>
+<body>
+	<div id="imgSmall" class="img-s">
+		<img src="images/nokia_s.jpg" alt="nokia 1020" title="nokia 1020" />
+		<div id="move" class="move"></div>
+		<div id="imgBig" class="img-big">
+			<img src="images/nokia_big.jpg" alt="nokia 1020" title="nokia 1020" id="img"/>
+		</div>
+	</div>
+	
+
+	<script>
+		var imgSmall = document.getElementById("imgSmall");
+		var imgBig = document.getElementById("imgBig");
+		var moveDiv = document.getElementById("move");
+		var img = document.getElementById("img");
+		
+		// 获取样式指定标签样式的值
+		function getStyle(tag, prop) {
+			var value;
+			if (prop in document.body.style){
+				if (window.getComputedStyle){
+					value = window.getComputedStyle(tag, null)[prop];
+				} else {
+					value = tag.currentStyle[prop];
+				}
+			} else {
+				value = tag[prop];
+			}
+			value = parseFloat(value);
+			if (isNaN(value)){
+				value = 0;
+			}
+			return value;
+		}
+		
+		// 设定放大镜界限
+		function limit(x) {
+			if (x < 0){
+				x = 0;
+			} else if (x >= 175){
+				x = 175;
+			}
+			return x;
+		}
+		// 移动moveTo
+		imgSmall.onmouseover = function(event) {
+			moveDiv.style.display = "block";
+			imgBig.style.display = "block";
+			var ev = event || window.event;
+			var startMX = ev.clientX;
+			var startMY = ev.clientY;
+			// 初始化放大镜moveTo的位置
+			moveDiv.style.left = ((startMX - imgSmall.offsetLeft) - moveDiv.offsetWidth / 2) + "px";
+			moveDiv.style.top = ((startMY - imgSmall.offsetTop) - moveDiv.offsetHeight / 2) + "px";
+			var startX = getStyle(moveDiv, "left");
+			var startY = getStyle(moveDiv, "top");
+			imgSmall.onmousemove = function(event) {
+				var ev = event || window.event;
+				var moveX = ev.clientX - startMX + startX;
+				var moveY = ev.clientY - startMY + startY;
+				// 限制moveTo移动的范围
+				moveX = limit(moveX);
+				moveY = limit(moveY);
+				// 移动moveTo的位置
+				moveDiv.style.left = moveX + "px";
+				moveDiv.style.top = moveY + "px";
+				imgBig.scrollLeft = moveX * 2.3;
+				imgBig.scrollTop = moveY * 2.3;
+				if (ev.preventDefault){
+					ev.preventDefault();
+				} else {
+					ev.returnValue = false;
+				}
+			}
+		}
+		
+		// 清除onmousemove、隐藏放大镜
+		imgSmall.onmouseout = function() {
+			moveDiv.style.display = "none";
+			imgBig.style.display = "none";
+			document.onmousemove = null;
+		}
+	</script>
+</body>
+</html>
