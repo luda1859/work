@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>倒计时</title>
+	<meta name="description" content="" />
+</head>
+<body>
+	<div>
+		<h1>距离2014年春节还有：</h1>
+		<span id="time"></span>
+	</div>
+	<script>
+		var time = document.getElementById("time");
+		function getTime() {
+			var start = new Date();
+			var end = new Date(2014,0,31);
+			var times = end.getTime() - start.getTime();
+			var days = Math.floor(times / 86400000),
+				hours = Math.floor(times / 3600000) % 60,
+				minutes = Math.floor(times / 60000) % 60,
+				seconds = Math.floor(times / 1000) % 60;
+			time.innerHTML = days + " 天 " + hours + " 小时 " + minutes + " 分钟 " + seconds + " 秒.";
+			if (times <= 0){
+				time.innerHTML = "祝大家马年快乐!!"
+				return;
+			}
+			var t = setTimeout(getTime, 1000);
+		}
+		getTime();
+	</script>
+</body>
+</html>

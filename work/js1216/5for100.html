@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>100条新闻随机选5条</title>
+	<meta name="description" content="" />
+</head>
+<body>
+	<ul id="ul">
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+	</ul>
+<script>
+	var ul = document.getElementById("ul");
+	var lis = document.getElementsByTagName("li");
+	var news = [];
+	var num;
+	// 建立一个包含100条新闻的数组
+	for (var i = 1; i <= 100; i++) {
+		news.push("第" + i + "条新闻");
+	}
+
+	// 随机输出n条新闻
+	for (var j = 0; j < lis.length; j++){
+		
+		do {
+			num = Math.floor(Math.random()*100)
+		}
+		while (news[num] == null);		// 如果news[num]为null，再执行一次do，重新取一个数字
+		lis[j].innerHTML = news[num];
+		news[num] = null;				// 已经随机出来的新闻，设置为null。
+	}
+</script>
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>我的主页</title>
+	<meta name="description" content="" />
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		button {
+			width: 40px;
+			height: 40px;
+			float: left;
+		}
+		.top {
+			width: 400px;
+			height: 40px;
+			border: 1px solid #ccc;
+			margin: 50px auto 0;
+		}
+		.month {
+			width: 320px;
+			height: 40px;
+			line-height: 40px;
+			text-align: center;
+			float: left;
+			background-color: #eee;
+		}
+		.days {
+			width: 400px;
+			height: 300px;
+			border: 1px solid #ccc;
+			margin: 0 auto;
+		}
+		.days li {
+			width: 57px;
+			height: 60px;
+			line-height: 60px;
+			text-align: center;
+			font-size: 30px;
+			list-style-type: none;
+			float: left;
+		}
+	</style>
+</head>
+<body>
+	<div class="top">
+		<button id="prev">《</button>
+		<h1 id="month" class="month">2013年12月</h1>
+		<button id="next">》</button>
+	</div>
+	<ul id="days" class="days">
+	</ul>
+
+	<script>
+		var days = document.getElementById("days");
+		var nextBtn = document.getElementById("next");
+		var prevBtn = document.getElementById("prev");
+		var monthTop = document.getElementById("month");
+		var month = 12;
+		var year = 2013;
+		var num;
+
+		// 下一个月
+		nextBtn.onclick = function() {
+			month ++;
+			if (month > 12){
+				month = 1
+			}
+			getDays();
+		}
+
+		// 上一个月
+		prevBtn.onclick = function() {
+			month --;
+			if (month <= 0){
+				month = 12;
+			}
+			getDays();
+		}
+
+		// 根据月份输出天数。
+		function getDays() {
+			days.innerHTML = "";
+			monthTop.innerHTML = year + "年" + month + "月";
+			if (month == 1 || 
+				month == 3 || 
+				month == 5 || 
+				month == 7 || 
+				month == 8 || 
+				month == 10 || 
+				month == 12){
+				num = 31;
+			} else if (month == 2){
+				if (year % 4 == 0){
+					num = 29;
+				} else {
+					num = 28;
+				}
+			} else {
+				num = 30;
+			}
+			for (var i = 1 ; i <= num; i++){
+				days.innerHTML += "<li>" + i + "</li>";
+			}
+		}
+		getDays();
+	</script>
+</body>
+</html>
