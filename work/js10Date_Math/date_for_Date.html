@@ -16,7 +16,7 @@
 		}
 		.top {
 			width: 400px;
-			height: 81px;
+			height: 121px;
 			border: 1px solid #ccc;
 			margin: 50px auto 0;
 		}
@@ -58,10 +58,60 @@
 			background-color: #eee;
 			float: left;
 		}
+		.select {
+			width: 400px;
+			height: 40px;
+			float: left;
+		}
+		.select span {
+			width: 44px;
+			height: 40px;
+			line-height: 40px;
+			font-size: 14px;
+			margin-left: 5px;
+			display: inline;
+			float: left;
+		}
+		.y-sel {
+			width: 100px;
+			height: 30px;
+			float: left;
+		}
+		.m-sel {
+			width: 60px;
+			height: 30px;
+			float: left;
+		}
+		.change-btn {
+			width: 40px;
+			height: 30px;
+			margin-top: 5px;
+			float: left;
+		}
+		.rtn-btn {
+			width: 70px;
+			height: 30px;
+			margin: 5px 0 0 5px;
+			float: left;
+		}
+		select {
+			margin: 5px 10px 0 0;
+			display: inline;
+		}
 	</style>
 </head>
 <body>
 	<div class="top">
+		<div class="select">
+			<span>年份：</span>
+			<select id="yearSel" class="y-sel">
+			</select>
+			<span>月份：</span>
+			<select id="monthSel" class="m-sel">
+			</select>
+			<button id="changeBtn" class="change-btn">跳转</button>
+			<button id="rtnBtn" class="rtn-btn">返回今日</button>
+		</div>
 		<button id="prev">《</button>
 		<h1 id="month" class="month">2013年12月</h1>
 		<button id="next">》</button>
@@ -83,10 +133,49 @@
 		var nextBtn = document.getElementById("next");
 		var prevBtn = document.getElementById("prev");
 		var monthTop = document.getElementById("month");
+
+		var yearSel = document.getElementById("yearSel");
+		var monthSel = document.getElementById("monthSel");
+		var yearOpts = yearSel.getElementsByTagName("option");
+		var monthOpts = monthSel.getElementsByTagName("option");
+
+		var changeBtn = document.getElementById("changeBtn");
+		var rtnBtn = document.getElementById("rtnBtn");
+
 		var thisTime = new Date();
 		var month = thisTime.getMonth() + 1;	// 获取当前月份
 		var year = thisTime.getFullYear();		// 获取当前年份
-		
+		var today = thisTime.getDate();			// 获取当前日期
+
+		// 初始化年份月份的select下拉单
+		function getAllYM(){
+			for (var i = 1900; i <= 2050; i++){
+				yearSel.innerHTML += "<option value='" + i +"'>" + i + "</option>";
+			}
+			for (var i = 1; i <= 12; i++){
+				monthSel.innerHTML += "<option value='" + i +"'>" + i + "</option>";
+			}
+		}
+		// 获取当前年分月份的Select焦点
+		function getSelected() {
+			for (var i = 0; i < yearOpts.length; i++){
+					if (i + 1900 == year){
+						yearOpts[i].selected = true;
+						break;
+					}
+				}
+			for (var i = 0; i < monthOpts.length; i++){
+				if (i + 1 == month){
+					monthOpts[i].selected = true;
+					break;
+				}
+			}
+		}
+		getAllYM();
+		getSelected();
+
+
+
 		// 根据年份（y）月份（m）参数计算当月天数，并显示到页面
 		function setMonth(y, m) {
 			changeTop(y, m);
@@ -129,6 +218,15 @@
 					days.innerHTML += "<li>" + (i - day) + "</li>";
 				}
 			}
+			// 标注今天
+			var thisTime = new Date();
+			var month = thisTime.getMonth() + 1;	// 获取当前月份
+			var year = thisTime.getFullYear();		// 获取当前年份
+			var today = thisTime.getDate();			// 获取当前日期
+			var lis = days.getElementsByTagName("li");
+			if ((year == y) && (month == m)){
+				lis[today-1].outerHTML = "<li style='background-color: #eee;'>" + today + "</li>";
+			}
 		}
 		// 判断每月1日是星期几
 		function getDay(y, m) {
@@ -140,13 +238,15 @@
 			month ++;
 			month = judgeYM(month);
 			setMonth(year, month);
+			getSelected();
 		}
 		// 上一个月按钮
 		prevBtn.onclick = function() {
 			month --;
 			month = judgeYM(month);
 			setMonth(year, month);
-		}		
+			getSelected();
+		}
 		// 判断月份是否在合理范围内，并增减相应年份
 		function judgeYM(m) {
 			if (m > 12){
@@ -157,6 +257,21 @@
 				year --;
 			}
 			return m;
+		}
+
+		// 跳转到相应年份月份
+		changeBtn.onclick = function() {
+			year = yearSel.value;
+			month = monthSel.value;
+			setMonth(year, month);
+			getSelected();
+		}
+		// 返回当月
+		rtnBtn.onclick = function() {
+			month = thisTime.getMonth() + 1;	// 获取当前月份
+			year = thisTime.getFullYear();		// 获取当前年份
+			setMonth(year, month);
+			getSelected();
 		}
 
 		// 默认执行年份月份
