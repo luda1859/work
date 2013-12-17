@@ -16,7 +16,7 @@
 		}
 		.top {
 			width: 400px;
-			height: 40px;
+			height: 81px;
 			border: 1px solid #ccc;
 			margin: 50px auto 0;
 		}
@@ -30,7 +30,7 @@
 		}
 		.days {
 			width: 400px;
-			height: 300px;
+			height: 360px;
 			border: 1px solid #ccc;
 			margin: 0 auto;
 		}
@@ -43,6 +43,21 @@
 			list-style-type: none;
 			float: left;
 		}
+		.week {
+			width: 400px;
+			height: 40px;
+			border-top: 1px solid #ccc;
+			float: left;
+		}
+		.week span {
+			width: 57px;
+			height: 40px;
+			line-height: 40px;
+			font-size: 16px;
+			text-align: center;
+			background-color: #eee;
+			float: left;
+		}
 	</style>
 </head>
 <body>
@@ -50,6 +65,15 @@
 		<button id="prev">《</button>
 		<h1 id="month" class="month">2013年12月</h1>
 		<button id="next">》</button>
+		<div class="week">
+			<span style="color: red;">日</span>
+			<span>一</span>
+			<span>二</span>
+			<span>三</span>
+			<span>四</span>
+			<span>五</span>
+			<span>六</span>
+		</div>
 	</div>
 	<ul id="days" class="days">
 	</ul>
@@ -67,12 +91,19 @@
 		function setMonth(y, m) {
 			changeTop(y, m);
 			clearDays();
-			getDate(getDays(y, m));
+			getDate(getDays(y, m), y, m);
 		}
 		// 获取当月天数。
 		function getDays(y, m) {
-			var time = new Date(y, m);  
-			time.setDate(0);
+			/**********************************************************************
+			 * JS认为每个月的第0天就是上个月的最后一天（如12月0日，就是11月30日），
+			 * JS的月份是从0开始，即0代表1月、11代表12月等，
+			 * 根据传入参数m（1~12）月的第0天，就可以判断出上个月m-1（0~11）有几天。
+			 * 即真正意义上m月的天数。
+			 * 说明：time.setDate(0);和Date(y, m, 0);的0等价。
+			 **********************************************************************/
+			var time = new Date(y, m, 0);		 
+			// time.setDate(0);
 			return time.getDate();
 		}
 		// 改变年份和月份的显示
@@ -83,23 +114,26 @@
 		function clearDays () {
 			days.innerHTML = "";
 		}
-		// 根据m月份的天数显示日历日期
-		function getDate(num) {
-			for (var i = 1 ; i <= num; i++){
-				days.innerHTML += "<li>" + i + "</li>";
+		// 根据m月份的天数显示日历日期，并按星期排列
+		function getDate(num, y, m) {
+			var day = getDay(y, m);		//	获取起始的星期数
+			for (var i = 1 ; i <= num + day; i++){
+				// 小于星期数的日期为空
+				if (i <= day){
+					days.innerHTML += "<li>&nbsp;</li>";
+				// 判断是否为周日
+				} else if ((i - 1) % 7 == 0){
+					days.innerHTML +="<li style='color: red;'>" + (i - day) + "</li>";
+				// 减去起始空白天数（i - day），开始输出日期
+				} else {
+					days.innerHTML += "<li>" + (i - day) + "</li>";
+				}
 			}
 		}
-		
-		// 判断月份是否在合理范围内，并增减相应年份
-		function judgeYM(m) {
-			if (m > 12){
-				m = 1;
-				year ++;
-			} else if (m < 1){
-				m = 12;
-				year --;
-			}
-			return m;
+		// 判断每月1日是星期几
+		function getDay(y, m) {
+			var dates = new Date(y,m-1,1);
+			return dates.getDay();
 		}
 		// 下一个月按钮
 		nextBtn.onclick = function() {
@@ -112,7 +146,19 @@
 			month --;
 			month = judgeYM(month);
 			setMonth(year, month);
+		}		
+		// 判断月份是否在合理范围内，并增减相应年份
+		function judgeYM(m) {
+			if (m > 12){
+				m = 1;
+				year ++;
+			} else if (m < 1){
+				m = 12;
+				year --;
+			}
+			return m;
 		}
+
 		// 默认执行年份月份
 		setMonth(year, month);
 	</script>
