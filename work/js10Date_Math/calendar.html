@@ -43,6 +43,15 @@
 			list-style-type: none;
 			float: left;
 		}
+		.days li span{
+			width: 57px;
+			height: 60px;
+			line-height: 60px;
+			text-align: center;
+			font-size: 30px;
+			background-color: #eee;
+			float: left;
+		}
 		.week {
 			width: 400px;
 			height: 40px;
@@ -98,6 +107,7 @@
 			margin: 5px 10px 0 0;
 			display: inline;
 		}
+
 	</style>
 </head>
 <body>
@@ -146,16 +156,38 @@
 		var month = thisTime.getMonth() + 1;	// 获取当前月份
 		var year = thisTime.getFullYear();		// 获取当前年份
 		var today = thisTime.getDate();			// 获取当前日期
+		// 初始化年份select下拉单
+		function setAllYear() {
+			for (var i = 1900; i < 2050; i++){
+				yearSel.add(new Option(i,i));
+			}
+		}
+		setAllYear();
+		// 初始化月份select下拉单
+		function setAllMonth() {
+			for (var i = 1; i <= 12; i++){
+				monthSel.add(new Option(i,i));
+			}
+		}
+		setAllMonth();
 
-		// 初始化年份月份的select下拉单
-		function getAllYM(){
+		/* IE6不兼容
+		// 初始化年份select下拉单
+		function getAllYear() {
 			for (var i = 1900; i <= 2050; i++){
 				yearSel.innerHTML += "<option value='" + i +"'>" + i + "</option>";
 			}
+		}
+		getAllYear();
+
+		// 初始化月份select下拉单
+		function getAllMonth() {
 			for (var i = 1; i <= 12; i++){
 				monthSel.innerHTML += "<option value='" + i +"'>" + i + "</option>";
 			}
 		}
+		getAllMonth();*/
+
 		// 获取当前年分月份的Select焦点
 		function getSelected() {
 			for (var i = 0; i < yearOpts.length; i++){
@@ -171,17 +203,16 @@
 				}
 			}
 		}
-		getAllYM();
 		getSelected();
-
-
 
 		// 根据年份（y）月份（m）参数计算当月天数，并显示到页面
 		function setMonth(y, m) {
 			changeTop(y, m);
 			clearDays();
 			getDate(getDays(y, m), y, m);
+			tabToday(y, m);
 		}
+
 		// 获取当月天数。
 		function getDays(y, m) {
 			/**********************************************************************
@@ -195,19 +226,22 @@
 			// time.setDate(0);
 			return time.getDate();
 		}
+
 		// 改变年份和月份的显示
 		function changeTop(y, m) {
 			monthTop.innerHTML = y + "年" + m + "月";
 		}
+
 		// 清除日历日期
 		function clearDays () {
 			days.innerHTML = "";
 		}
+
 		// 根据m月份的天数显示日历日期，并按星期排列
 		function getDate(num, y, m) {
 			var day = getDay(y, m);		//	获取起始的星期数
 			for (var i = 1 ; i <= num + day; i++){
-				// 小于星期数的日期为空
+				// 小于首日星期数的日期为空
 				if (i <= day){
 					days.innerHTML += "<li>&nbsp;</li>";
 				// 判断是否为周日
@@ -218,16 +252,20 @@
 					days.innerHTML += "<li>" + (i - day) + "</li>";
 				}
 			}
-			// 标注今天
+		}
+
+		// 标注今天
+		function tabToday(y, m) {
 			var thisTime = new Date();
 			var month = thisTime.getMonth() + 1;	// 获取当前月份
 			var year = thisTime.getFullYear();		// 获取当前年份
 			var today = thisTime.getDate();			// 获取当前日期
 			var lis = days.getElementsByTagName("li");
 			if ((year == y) && (month == m)){
-				lis[today-1].outerHTML = "<li style='background-color: #eee;'>" + today + "</li>";
+				lis[today-1].innerHTML = "<span>" + today + "</span>";
 			}
 		}
+
 		// 判断每月1日是星期几
 		function getDay(y, m) {
 			var dates = new Date(y,m-1,1);
