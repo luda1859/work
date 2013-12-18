@@ -1,0 +1,201 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>我的主页</title>
+	<meta name="description" content="" />
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		body {
+			font-size: 12px;
+			font-family: "微软雅黑";
+			background-color: #0f0f19;
+		}
+		ul {
+			list-style: none;
+		}
+		em , var {
+			font-style: normal;
+		}
+		/* clear folat */
+		.cf:before,
+		.cf:after {
+			content: " ";
+			display: table;
+		}
+		.cf:after {
+			clear: both;
+		}
+		.cf {
+			*zoom: 1;
+		}
+		.main {
+			width: 500px;
+			min-height: 580px;
+			_height: 580px;
+			margin: 20px auto;
+			padding-bottom: 20px; 
+			background-color: #6c8d3e;
+		}
+		.ipt-text {
+			width: 360px;
+			height: 80px;
+			margin: 20px 5px 5px 20px;
+			background-color: #e2ffe3;
+			border-color: #efffeb;
+			font-size: 16px;
+			padding: 3px;
+			float: left;
+		}
+		.btn {
+			width: 80px;
+			height: 30px;
+			line-height: 30px;
+			font-size: 16px;
+			margin: 20px 0 0 0;
+			display: inline;
+			float: left;
+		}
+		.cons {
+			width: 500px;
+			float: left;
+		}
+		.cons li {
+			width: 450px;
+			min-height: 50px;
+			_height: 50px;
+			margin: 10px auto;
+			padding: 5px 5px 25px 5px;
+			background-color: #ccffcc;
+			border: 1px solid #b8da62;
+			position: relative;
+		}
+		.cons span {
+			word-wrap:break-word;
+		}
+		.cons li div {
+			position: absolute;
+			right: 10px;
+			bottom: 5px;
+			z-index: 1;
+		}
+		.cons li div em {
+			cursor: pointer;
+			margin-left: 5px;
+		}
+	</style>
+</head>
+<body>
+	<div class="main cf">
+		<textarea id="ipt-text" class="ipt-text" maxlength="140">请输入内容...</textarea>
+		<input type="button" name="btn" value="发布" id="btn" class="btn" />
+		<ul id="cons" class="cons">
+		</ul>
+	</div>
+	<script>
+		var iptText = document.getElementById("ipt-text");
+		var btn = document.getElementById("btn");
+		var cons = document.getElementById("cons");
+		var lis = [];
+		var spans = [];
+		var divs = [];
+		var vars = [];
+		var ems = [];
+		var x = 0;  // 标签的下标参数
+
+		// 添加内容
+		function setCons() {
+			isNull()
+			createTag()
+			addCons();
+			setLis();
+			setValue();
+			iptText.value = "";
+			// 删除内容
+			removeCons();
+			x++;
+		}
+
+		// 判断输入内容是否为空
+		function isNull() {
+			if (!iptText.value){
+				alert("请输入内容！");
+				return;
+			}
+		}
+
+		// 新建标签
+		function createTag() {
+			lis[x] = document.createElement("li");
+			spans[x] = document.createElement("span");
+			divs[x] = document.createElement("div");
+			vars[x] = document.createElement("var");
+			ems[x] = document.createElement("em");
+		}
+
+		// 设置标签的内容
+		function setValue() {
+			ems[x].innerHTML = "删除";
+			vars[x].innerHTML = getDate();
+			spans[x].innerHTML = iptText.value;
+		}
+
+		// 给li填内容
+		function setLis() {
+			divs[x].appendChild(vars[x]);
+			divs[x].appendChild(ems[x]);
+			lis[x].appendChild(spans[x]);
+			lis[x].appendChild(divs[x]);
+		}
+
+		// ul里加入li
+		function addCons() {
+			cons.insertBefore(lis[x], cons.firstChild);
+		}
+
+		// 获取当前日期时间
+		function getDate() {
+			var date = new Date();
+			var y = date.getFullYear();
+			var m = date.getMonth();
+			var day = date.getDate();
+			var hour = date.getHours();
+			var minutes = date.getMinutes();
+			if (minutes <= 9){
+				minutes = "0" + minutes
+			}
+			return y + "年" + m + "月" + day + "日 " + hour + ":" + minutes;
+		}
+
+		// 删除li
+		function removeCons() {
+			for (var i = 0 ;i < ems.length ; i++){
+				ems[i].onclick = removeOnclick;
+			}
+		}
+		// 删除li的点击事件
+		function removeOnclick() {
+			for (var i = 0; i < ems.length; i++){
+				if (ems[i] == this){
+					cons.removeChild(lis[i]);
+				}	
+			}
+		}
+
+		var i = 0; // 判断点击次数
+		function onlyOnclickOne() {
+			// 鼠标只有第一次点击时才会删除内容
+			if (i > 0){
+				return;
+			}
+			iptText.innerHTML = "";
+			i++;
+		}
+		iptText.onclick = onlyOnclickOne;
+		btn.onclick = setCons;
+	</script>
+</body>
+</html>
