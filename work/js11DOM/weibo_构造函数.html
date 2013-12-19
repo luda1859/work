@@ -67,16 +67,17 @@
 			width: 450px;
 			min-height: 50px;
 			_height: 50px;
-			margin: 10px auto;
-			padding: 5px 5px 25px 5px;
+			margin: 20px auto 0;
 			background-color: #ccffcc;
-			border: 1px solid #b8da62;
 			position: relative;
 		}
 		.cons span {
+			padding: 5px 5px 25px 5px;
+			display: block;
 			word-wrap:break-word;
 		}
 		.cons li div {
+			height: 16px;
 			position: absolute;
 			right: 10px;
 			bottom: 5px;
@@ -117,19 +118,16 @@
 		function SetCons() {
 			// 执行添加内容
 			this.setCons = function(){
-				this.isIptNull();
+				// 判断输入内容是否为空
+				if (!iptText.value){
+					alert("请输入内容！");
+					return;
+				}
 				this.createCons();
 				this.addCons();
 				this.setLis();
 				this.setValue();
 				iptText.value = "";
-			}
-			// 判断输入内容是否为空
-			this.isIptNull = function() {
-				if (!iptText.value){
-					alert("请输入内容！");
-					return;
-				}
 			}
 			// 创建内容
 			this.createCons = function() {
@@ -184,8 +182,54 @@
 				var e = e || window.event
 				var target = e.target || e.srcElement;
 				if (target.tagName === "EM"){
-					cons.removeChild(target.parentNode.parentNode);
+					setTimeout(function() {
+						target.parentNode.parentNode.parentNode.removeChild(target.parentNode.parentNode);
+					}, 300);
+					target.parentNode.parentNode.style.minHeight = "0";
+					target.parentNode.parentNode.style.overflow = "hidden";
+					moveTo(target.parentNode.parentNode, "marginTop", 0, 5);
+					moveTo(target.parentNode, "height", 0, 10);
+					moveTo(target.parentNode.parentNode, "height", 0, 10);
 				}
+			}
+			// 控制动画
+			function moveTo(tag, prop, end, duration){
+				var speed = (end - getStyle(tag, prop)) / duration;
+				var tprop = "_t_" + prop;
+				var i = getStyle(tag, prop);
+				if (tag[tprop]){
+					clearInterval(tag[tprop]);
+				}
+				tag[tprop] = setInterval(function(){
+					i += speed;
+					if ((speed > 0 && i > end) || (speed < 0 && i < end)){
+						clearInterval(tag[tprop]);
+						return;
+					}
+					if (prop in document.body.style){
+						tag.style[prop] = i + "px";
+					} else {
+						tag[prop] = i;
+					}
+				}, 17)
+			}
+			// 获取样式值
+			function getStyle(tag, prop) {
+				var value;
+				if (prop in document.body.style){
+					if (window.getComputedStyle){
+						value = document.defaultView.getComputedStyle(tag, null)[prop];
+					} else {
+						value = tag.currentStyle[prop];
+					}
+				} else {
+					value = tag[prop];
+				}
+				value = parseFloat(value);
+				if (isNaN(value)){
+					value = 0;
+				}
+				return value;
 			}
 		}
 
