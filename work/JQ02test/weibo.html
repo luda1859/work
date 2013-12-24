@@ -1,0 +1,141 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>我的主页</title>
+	<meta name="description" content="" />
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		body {
+			font-size: 12px;
+			font-family: "微软雅黑";
+			background-color: #0f0f19;
+		}
+		ul {
+			list-style: none;
+		}
+		em , var {
+			font-style: normal;
+		}
+		li {
+			vertical-align: top;
+		}
+		/* clear folat */
+		.cf:before,
+		.cf:after {
+			content: " ";
+			display: table;
+		}
+		.cf:after {
+			clear: both;
+		}
+		.cf {
+			*zoom: 1;
+		}
+		.main {
+			width: 500px;
+			min-height: 580px;
+			_height: 580px;
+			margin: 20px auto;
+			padding-bottom: 20px; 
+			background-color: #6c8d3e;
+		}
+		.ipt-text {
+			width: 360px;
+			height: 80px;
+			margin: 20px 5px 5px 20px;
+			background-color: #e2ffe3;
+			border-color: #efffeb;
+			font-size: 16px;
+			padding: 3px;
+			float: left;
+		}
+		.btn {
+			width: 80px;
+			height: 30px;
+			line-height: 30px;
+			font-size: 16px;
+			margin: 20px 0 0 0;
+			display: inline;
+			float: left;
+		}
+		.cons {
+			width: 500px;
+			float: left;
+		}
+		.cons li {
+			width: 450px;
+			min-height: 50px;
+			_height: 50px;
+			margin: 20px 0 0 20px;
+			background-color: #ccffcc;
+			position: relative;
+			float: left;
+			display: inline;
+		}
+		.cons span {
+			padding: 5px 5px 25px 5px;
+			display: block;
+			word-wrap:break-word;
+		}
+		.cons li div {
+			height: 16px;
+			position: absolute;
+			right: 10px;
+			bottom: 5px;
+			z-index: 1;
+		}
+		.cons li div em {
+			cursor: pointer;
+			margin-left: 5px;
+		}
+	</style>
+	<script src="js/jquery-1.10.2.js"></script>
+</head>
+<body>
+	<div class="main cf">
+		<textarea class="ipt-text" maxlength="140">请输入内容...</textarea>
+		<input type="button" name="btn" value="发布" class="btn" />
+		<ul class="cons">
+		</ul>
+	</div>
+	<script>
+		$(".btn").click(function(){
+			if (!($(".ipt-text").val()) || $(".ipt-text").val() == "请输入内容..."){
+				alert("请输入内容！");
+			} else {
+				$("<li><span>" + $(".ipt-text").val() + "</span><div><var>" + getNow() + "</var><em>删除</em></div></li>").prependTo(".cons");
+				$(".ipt-text").val("");
+				$("em").click(function(){
+					$(this).parent().parent().css("overflow","hidden");
+					$(this).parent().parent().animate({
+						height : "0",
+						marginTop : "0",
+						minHeight : "0"
+					}, 300, function(){
+						$(this).remove();
+					})
+				})
+			}
+		})
+		var clickNum = 0;
+		$(".ipt-text").click(function(){
+			if (clickNum < 1){
+				$(".ipt-text").val("");
+			}
+			clickNum ++;
+		})
+		function getNow() {
+			var now = new Date();
+			return now.getFullYear() + "年" + 
+					now.getMonth() + "月" + 
+					now.getDate() + "日 " +
+					now.getHours() + ":" +
+					now.getMinutes();
+		}
+	</script>
+</body>
+</html>

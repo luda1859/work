@@ -1,0 +1,103 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>JQuery选择器</title>
+	<meta name="description" content="" />
+	<script src="js/jquery-1.10.2.js"></script>
+</head>
+<body>
+	<div class="demolNews">
+		<dl id="news">
+			<dt>
+				<a href="http://companies.caixin.com/2013-12-23/100620857.html">国家铁路局官网试行开通 </a>
+			</dt>
+			<dd>
+				<span>财新记者 路炳阳 12月24日 07:00</span> 
+				<p><a href="http://companies.caixin.com/2013-12-23/100620857.html">2013年3月20日，原铁道部官方网站关闭，随后，但铁道局与铁道总公司的官方网站迟迟未有动静</a></p>
+			</dd>
+		</dl>
+		<ul>
+			<li><a href="http://companies.caixin.com/2013-10-11/100590349.html">中铁总公司官网历时半年终启用 </a></li>
+		</ul>
+	</div>
+	<script>
+		// 标签选择器
+		$("dt")
+		// ID选择器
+		$("#news")
+		// Class选择器
+		$(".demolNews")
+		// 选取所有标签
+		$("*")
+		// 群组选择器
+		$("div,ul,dl#news")
+		// 选取ul下的所有li
+		$("ul li")
+		// 选取ul下的子标签li
+		$("ul>li")
+		// 选取id是news的标签的下一个ul标签(同辈)
+		$("#news+ul")
+		// 选取id是news的标签后面所有ul标签(同辈)
+		$("#news~ul")
+		// 选取所有div标签中的第一个
+		$("div:first")
+		// 选取所有div标签中的最后一个
+		$("div:last")
+		// 选取ID不是news的div
+		$("div:not(#news)")
+		// 选取偶数div
+		$("div:even")
+		// 选取奇数div
+		$("div:odd")
+		// 选取所有div中的第二个div
+		$("div:eq(1)")
+		// 选取所有div中大于第二个的div
+		$("div:gt(1)")
+		// 选取所有div中小于第四个的div
+		$("div:lt(3)")
+		// 选取文本内容含有“铁路”的a标签
+		$("a:contains(‘铁路’)")
+		// 选取不包含子元素或文本的空元素
+		$("div:empty")
+		// 选取含有匹配元素(class="news")的标签
+		$("div:has(.news)")
+		// 选取含有子元素或文本的标签
+		$("div:parent")
+		// 选取拥有ID属性的div
+		$("div[id]")
+		// 选取ID属性为news的div
+		$("div[id=news]")
+		// 选取ID属性不等于news的div?
+		$("div[id!=news]")
+		// 选取class属性以abc开始的div
+		$("div[class^=abc]")
+		// 选取class属性以xyz结束的div
+		$("div[class$=xyz]")
+		// 选取class属性里含有ijk的div
+		$("div[class*=ijk]")
+		// 选取满足多个属性条件的div
+		$("div[class^=abc][id=news]")
+		// 选取每个父元素下第3个div
+		$("div:nth-child(3)")
+		// 选取每个父元素下偶数div
+		$("div:nth-child(even)")
+		// 选取每个父元素下奇数div
+		$("div:nth-child(odd)")
+		// 选取每个<ul>中第一个<li>元素
+		$("ul li:first-child")
+		// 选取每个<ul>中最后一个<li>元素
+		$("ul li:last-child")
+		// 选取每个<ul>中只有一个的<li>元素
+		$("ul li:only-child")
+		// 选取所有可用的input标签
+		$("input:enabled")
+		// 选取所有不可用的input标签
+		$("input:disbled")
+		// 选取所有被选中的input标签(单选框、多选框)
+		$("input:checked")
+		// 选中所有被选中的option
+		$("select option:selected")
+	</script>
+</body>
+</html>

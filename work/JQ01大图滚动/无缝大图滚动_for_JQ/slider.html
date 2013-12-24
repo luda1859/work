@@ -1,0 +1,215 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>我的主页</title>
+	<meta name="description" content="" />
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		body {
+			font: 12px arial;
+			background-color: #000; 
+		}
+		.main {
+			width: 600px;
+			margin: 50px auto;
+			position: relative;
+		}
+		.btn {
+			width: 40px;
+			height: 400px;
+			line-height: 400px;
+			font-size: 32px;
+			color: #ccc;
+			text-align: center;
+			position: absolute;
+			top: 0;
+			z-index: 1;
+			opacity: 0.5;
+			filter: alpha(opacity=50);
+		}
+		.btn-l {
+			left: 0;
+		}
+		.btn-r {
+			right: 0;
+		}
+		.btn-num {
+			position: absolute;
+			top: 380px;
+			left: 240px;
+			z-index: 1;
+		}
+		.btn-num span {
+			float: left;
+			width: 16px;
+			height: 16px;
+			line-height: 16px;
+			color: #fff;
+			text-align: center;
+			border: 1px solid #ccc;
+			margin: 0 3px;
+		}
+		.btn-num span.selectd {
+			background-color: #0c0;
+		}
+		.slider {
+			width: 600px;
+			height: 400px;
+			overflow: hidden;
+			z-index: -1;
+		}
+		.slider img {
+			border: none;
+			vertical-align: top;
+			width: 600px;
+			height: 400px;
+		}
+	</style>
+	<script src="js/jquery-1.10.2.js"></script>
+</head>
+<body>
+	<div class="main" id="main">
+		<div id="leftBtn" class="btn btn-l">&lt;</div>
+		<div id="slider" class="slider">
+			<table id="sliderIn" cellpadding="0" cellspacing="0">
+				<tr>
+					<td><img src="images/big1.jpg" alt="big" /></td>
+					<td><img src="images/big2.jpg" alt="big" /></td>
+					<td><img src="images/big3.jpg" alt="big" /></td>
+					<td><img src="images/big4.jpg" alt="big" /></td>
+					<td><img src="images/big5.jpg" alt="big" /></td>
+				</tr>
+			</table>
+		</div>
+		<div id="rightBtn" class="btn btn-r">&gt;</div>
+		<div id="numBtn" class="btn-num">
+			<span style="background-color: red">1</span>
+			<span>2</span>
+			<span>3</span>
+			<span>4</span>
+			<span>5</span>
+		</div>
+	</div>
+	<script>
+		var span = document.getElementById("numBtn").getElementsByTagName("span");
+		$("#sliderIn tr").append("<td><img src='images/big1.jpg' alt='big' /></td>");
+		$("#sliderIn tr:first-child").prepend("<td><img src='images/big5.jpg' alt='big' /></td>");
+		$("#slider").scrollLeft("600");
+		// 设置数字按钮背景
+		function setSpanBg() {
+			$("#numBtn span").css("backgroundColor","")
+			span[i-1].style.backgroundColor = "red";
+		}
+		
+		// 上一张
+		$("#leftBtn").click(function(){	
+			i--;
+			if (i < 1){
+				$("#slider").stop(true).animate({
+					scrollLeft : 600 * i
+				},300,function(){
+				});
+				i = 5;
+				setSpanBg();
+				i = 6;
+			} else if (i == 5){
+				$("#slider").scrollLeft("3000")
+				i--;
+				setSpanBg();
+				$("#slider").stop(true).animate({
+					scrollLeft : 600 * i
+				},300,function(){});
+			} else {
+			setSpanBg();
+			$("#slider").stop(true).animate({
+				scrollLeft : 600 * i
+			},300,function(){});
+			}
+		})
+		
+		// 下一张
+		var i = 1;
+		$("#rightBtn").click(function() {
+			i++;
+			if (i > 5){
+				$("#slider").stop(true).animate({
+					scrollLeft : 600 * i
+				},300,function(){
+				});
+				i = 1;
+				setSpanBg();
+				i = 0;
+			} else if (i == 1){
+				$("#slider").scrollLeft("600")
+				i++;
+				setSpanBg();
+				$("#slider").stop(true).animate({
+					scrollLeft : 600 * i
+				},300,function(){});
+			} else {
+			setSpanBg();
+			$("#slider").stop(true).animate({
+				scrollLeft : 600 * i
+			},300,function(){});
+			}
+		})
+
+		// 第N张
+		$("#numBtn span").each(function(ind){
+			$(this).click(function(){
+				$("#slider").animate({
+					scrollLeft : (ind + 1) * 600
+				}, 300);
+				$("#numBtn span").css("backgroundColor","")
+				$(this).css("backgroundColor","red")
+				i = ind + 1;
+			})
+		})
+
+		// 自动滚动
+		var t = setInterval(autoMove,3000);
+		function autoMove() {
+			i++;
+			if (i > 5){
+				$("#slider").stop(true).animate({
+					scrollLeft : 600 * i
+				},300,function(){
+				});
+				i = 1;
+				setSpanBg();
+				i = 0;
+			} else if (i == 1){
+				$("#slider").scrollLeft("600")
+				i++;
+				setSpanBg();
+				$("#slider").stop(true).animate({
+					scrollLeft : 600 * i
+				},300,function(){});
+			} else {
+			setSpanBg();
+			$("#slider").stop(true).animate({
+				scrollLeft : 600 * i
+			},300,function(){});
+			}
+		}
+
+		// 鼠标移上去停止滚动，拿开继续滚动
+		$("#main").mouseenter(function() {
+			clearInterval(t);
+		})
+		$("#main").mouseleave(function() {
+			t = setInterval(autoMove,3000);
+		})
+		$(".btn").mouseenter(function() {
+			$(this).css("backgroundColor", "#000")
+		})
+		$(".btn").mouseleave(function() {
+			$(this).css("background", "none")
+		})
+	</script>
+</body>
+</html>

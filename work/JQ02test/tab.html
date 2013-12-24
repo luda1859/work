@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>我的主页</title>
+	<meta name="description" content="" />
+	<script src="js/jquery-1.10.2.js"></script>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		.btns {
+			width: 240px;
+			height: 24px;
+			line-height: 24px;
+			text-align: center;
+			margin: 30px auto 0;
+		}
+		.btns span {
+			width: 58px;
+			border: 1px solid #ccc;
+			float: left;
+		}
+		.cons {
+			width: 240px;
+			margin: 0 auto;
+		}
+		.cons div {
+			font-size: 160px;
+			text-align: center;
+			height: 300px;
+			border: 1px solid #ccc;
+			display: none;
+		}
+	</style>
+</head>
+<body>
+	<div class="btns">
+		<span>1</span>
+		<span>2</span>
+		<span>3</span>
+		<span>4</span>
+	</div>
+	<div id="cons" class="cons">
+		<div style="display: block;">1</div>
+		<div>2</div>
+		<div>3</div>
+		<div>4</div>
+	</div>
+	<script>
+		var divs = document.getElementById("cons").getElementsByTagName("div");
+		$(".btns span").each(function(i) {
+			$(this).click(function() {
+				$(".cons div").css("display","none");
+				divs[i].style.display = "block";
+			})
+		})
+	</script>
+</body>
+</html>

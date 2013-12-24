@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>我的主页</title>
+	<meta name="description" content="" />
+	<script src="js/jquery-1.10.2.js"></script>
+</head>
+<body>
+	<form>
+		<div><input type="checkbox" name="" value="" /><span>第一条</span></div>
+		<div><input type="checkbox" name="" value="" /><span>第二条</span></div>
+		<div><input type="checkbox" name="" value="" /><span>第三条</span></div>
+		<div><input type="checkbox" name="" value="" /><span>第四条</span></div>
+		<div><input type="checkbox" name="" value="" /><span>第五条</span></div>
+		<div><input type="checkbox" name="" value="" /><span>第六条</span></div>
+		<div><input type="checkbox" name="" value="" /><span>第七条</span></div>
+		<div><input type="checkbox" name="" value="" /><span>第八条</span></div>
+		<input id="btn" type="button" value="全选" />
+	</form>
+	<script>
+		$("#btn").click(function(){
+			if ($("div input").prop("checked")){
+				$("div input").prop("checked","");
+			} else {
+				$("div input").prop("checked","checked");
+			}
+		})
+	</script>
+</body>
+</html>
