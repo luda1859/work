@@ -183,7 +183,7 @@
 							alert("注册成功！");
 							$(".mask").hide();
 							$("#regist").hide();
-							clearIpt();
+							regLogin()
 						} else {
 							switch(data.code) {
 								case 0 : 
@@ -207,6 +207,30 @@
 				alert("两次输入密码不一致！请检查后再提交。")
 			}
 		})
+
+		// 注册登陆验证
+		function regLogin() {
+			$.ajax({
+				url : "http://ajaxh518.taobaoxyz.com/api/user/?method=login&name=" + $("#regUname").val() + "&password=" + $("#regPsw").val(),
+				type : "get",
+				dataType : "jsonp",
+				jsonp : "jsoncb",
+				success : function(data) {
+					if (data.done) {
+						alert("登陆成功！页面即将跳转！");
+						loginYN();
+					} else if (data.code == 0) {
+						alert("用户名或密码错误！");
+					} else {
+						alert("未知错误！请稍候重试！");
+					}
+				},
+				error : function() {
+					alert("服务器数据请求失败！请稍后重试。");
+				}
+			})
+		}
+
 
 		// 显示登录框
 		$("#logbtn-open").click(function() {
