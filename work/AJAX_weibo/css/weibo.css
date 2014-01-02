@@ -1,0 +1,114 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+body{
+	font-family: 微软雅黑;
+}
+.warp {
+	width: 970px;
+	margin: 0 auto;
+	position: relative;
+}
+.mask {
+	background-color: #000;
+	opacity: 0.5;
+	filter: alpha(opacity=50);
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 50;
+}
+.banner {
+	font-size: 30px;
+	font-family: "微软雅黑";
+	text-indent: 30px;
+	float: left;
+}
+.menu-top {
+	font-size: 16px;
+}
+.menu-top strong {
+	float: right;
+	height: 30px;
+	line-height: 30px;
+	color: #999;
+	margin: 30px 15px 0 0;
+	cursor: pointer;
+}
+.quitLog {
+	display: none;
+}
+.menu-top strong.logMsg {
+	cursor: auto;
+}
+.logbtn {
+	margin: 20px 0 0 50px;
+}
+.regbtn {
+	margin: 20px 0 0 50px;
+}
+.width {
+	width: 250px;
+}
+.loginbar {
+	margin-top: 100px;
+}
+.main-img {
+	margin-top: 50px;
+}
+.regist {
+	width: 500px;
+	position: absolute;
+	top: 80px;
+	left: 235px;
+	z-index: 100;
+	display: none;
+}
+.reg-ipt {
+	margin-top: 20px;
+	margin-left: 20px;
+	width: 300px;
+}
+.reg-btn {
+	margin-top: 30px;
+}
+.reg-btn button {
+	margin: 0 30px 30px;
+}
+.pub-btn {
+	cursor: pointer;
+}
+.cons li {
+	position: relative;
+}
+.cons li p {
+	width: 573px;
+	min-height: 30px;
+	line-height: 24px;
+	margin: 5px 0 24px;
+}
+.cons li em {
+	height: 24px;
+	line-height: 24px;
+	width: 30px;
+	position: absolute;
+	bottom: 5px;
+	right: 20px;
+	z-index: 10;
+	font-style: normal;
+	cursor: pointer;
+}
+.cons li var {
+	height: 24px;
+	line-height: 24px;
+	width: 200px;
+	position: absolute;
+	bottom: 5px;
+	right: 5px;
+	z-index: 10;
+	font-style: normal;
+}
+.list-pionter span {
+	cursor: pointer;
+}

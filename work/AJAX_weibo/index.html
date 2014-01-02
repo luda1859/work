@@ -1,0 +1,193 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>登录微博</title>
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="css/weibo.css" />
+	<script src="js/jquery-1.10.2.js"></script>
+</head>
+<body>
+	<div class="warp">
+		<div class="row">
+			<h1 class="banner">Dalu简易微博</h1>
+		</div>
+		<div class="row">
+			<div class="col-md-6">
+				<img src="images/wb.jpg" alt="微博" title="微博" class="main-img"/>
+			</div>
+			<div class="col-md-1">
+			</div>
+			<div class="col-md-5">
+				<div class="loginbar">
+					<form role="form">
+						<div class="form-group">
+							<label for="exampleInputEmail1">用户名：</label>
+							<input type="email" class="form-control width" id="uname" placeholder="请输入用户名">
+						</div>
+						<div class="form-group">
+							<label for="exampleInputPassword1">密码：</label>
+							<input type="password" class="form-control width" id="pwd" placeholder="请输入密码">
+						</div>
+					</form>
+					<div class="login-btn">
+						<button class="btn btn-default logbtn" id="logbtn">登录</button>
+						<button class="btn btn-default regbtn" id="regbtn">注册</button>
+					</div>
+				</div>
+			</div>
+			<div class="panel panel-default regist" id="regist">
+				<div class="panel-heading"><strong>用户注册</strong></div>
+				<div class="panel-body">
+					<div class="input-group reg-ipt">
+						<span class="input-group-addon">用户名　：</span>
+						<input type="text" class="form-control" id="regUname" placeholder="请输入用户名">
+					</div>
+					<div class="input-group reg-ipt">
+						<span class="input-group-addon">密　码　：</span>
+						<input type="password" class="form-control" id="regPsw" placeholder="请输入密码">
+					</div>
+					<div class="input-group reg-ipt">
+						<span class="input-group-addon">验证密码：</span>
+						<input type="password" class="form-control" id="regPsw2" placeholder="请再次输入密码">
+					</div>
+					<div class="form-group reg-btn">
+						<div class="col-sm-offset-2 col-sm-10">
+							<button class="btn btn-default" id="enterReg">提交注册</button>
+							<button class="btn btn-default" id="rtnLog">返回登录</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="mask">&nbsp;</div>
+	<script>
+		// 判断用户是否已登录
+		function loginYN() {
+			$.ajax({
+				url : "http://ajaxh518.taobaoxyz.com/api/user/?&method=getinfo",
+				type : "get",
+				dataType : "jsonp",
+				jsonp : "jsoncb",
+				success : function(data) {
+					if (data.done){
+						window.location.href='content.html';
+					}
+				},
+				error : function() {
+					alert("数据链接失败！")
+				}
+			})
+		}
+		loginYN();
+
+		// 显示注册框
+		$("#regbtn").click(function() {
+			$(".mask").css("width",$(window).width());
+			$(".mask").css("height",$(window).height());
+			$(".mask").show();
+			$("#regist").show();
+		})
+		// 隐藏注册框
+		$("#rtnLog").click(function() {
+			$(".mask").hide();
+			$("#regist").hide();
+			clearIpt();
+		})
+
+		// 清除注册框内容
+		function clearIpt() {
+			$("#regUname").val("");
+			$("#regPsw").val("");
+			$("#regPsw2").val("");
+		}
+		// 提交注册
+		$("#enterReg").click(function() {
+			if ($("#regPsw").val() === $("#regPsw2").val()){
+				$.ajax({
+					url : "http://ajaxh518.taobaoxyz.com/api/user/?name=" + $("#regUname").val() + "&password=" + $("#regPsw").val() + "&method=regist",
+					type: "get",
+					dataType : "jsonp",
+					jsonp : "jsoncb",
+					success : function(data) {
+						if (data.done){
+							alert("注册成功！");
+							regLogin();
+							loginYN();
+							////$(".mask").hide();
+							//$("#regist").hide();
+							//clearIpt();
+						} else {
+							switch(data.code) {
+								case 0 : 
+									alert(data.message);
+									break;
+								case 1 : 
+									alert("缺少用户名和密码！");
+									break;
+								case 2 :
+									alert("用户名已存在！");
+									break;
+								default : alert("未知错误！请稍后重试。");
+							}
+						}
+					},
+					error : function() {
+						alert("服务器数据请求失败！请稍后重试。");
+					}
+				})
+			} else {
+				alert("两次输入密码不一致！请检查后再提交。")
+			}
+		})
+
+		// 注册登陆验证
+		function regLogin() {
+			$.ajax({
+				url : "http://ajaxh518.taobaoxyz.com/api/user/?method=login&name=" + $("#regUname").val() + "&password=" + $("#regPsw").val(),
+				type : "get",
+				dataType : "jsonp",
+				jsonp : "jsoncb",
+				success : function(data) {
+					if (data.done) {
+						alert("登陆成功！页面即将跳转！");
+						loginYN();
+					} else if (data.code == 0) {
+						alert("用户名或密码错误！");
+					} else {
+						alert("未知错误！请稍候重试！");
+					}
+				},
+				error : function() {
+					alert("服务器数据请求失败！请稍后重试。");
+				}
+			})
+		}
+
+		// 登陆验证
+		$("#logbtn").click(function() {
+			$.ajax({
+				url : "http://ajaxh518.taobaoxyz.com/api/user/?method=login&name=" + $("#uname").val() + "&password=" + $("#pwd").val(),
+				type : "get",
+				dataType : "jsonp",
+				jsonp : "jsoncb",
+				success : function(data) {
+					if (data.done) {
+						alert("登陆成功！页面即将跳转！");
+						loginYN();
+					} else if (data.code == 0) {
+						alert("用户名或密码错误！");
+					} else {
+						alert("未知错误！请稍候重试！");
+					}
+				},
+				error : function() {
+					alert("服务器数据请求失败！请稍后重试。");
+				}
+			})
+		})
+	</script>
+</body>
+</html>

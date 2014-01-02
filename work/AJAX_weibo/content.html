@@ -1,0 +1,450 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>我的主页</title>
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+	<script src="js/jquery-1.10.2.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/weibo.css" />
+</head>
+<body>
+	<div class="warp">
+		<div class="row menu-top">
+			<h1 class="banner">Dalu简易微博</h1>
+			<span id="loginbar-top">
+				<strong id="regbtn">注册</strong>
+				<strong id="logbtn-open">登录</strong>
+			</span>
+			<strong class='quitLog'>退出登录</strong>
+			<strong class="logMsg"></strong>
+		</div>
+		<div class="row">
+			<div class="col-md-8">
+				<div class="panel panel-primary">
+					<div class="panel-heading">微博发布</div>
+					<div class="panel-body">
+						<div class="input-group">
+							<input type="text" class="form-control">
+							<span class="input-group-addon pub-btn" id="subBtn">发布</span>
+						</div>
+					</div>
+				</div>
+				<div class="panel panel-primary">
+					<div class="panel-heading" id="userConsList">微博列表</div>
+					<div class="panel-body">
+						<ul class="list-group cons" id="cons">
+						</ul>
+						<div class="btn-group">
+							<button type="button" class="btn btn-default" id="consPrveBtn">上一页</button>
+							<button type="button" class="btn btn-default" id="consNextBtn">下一页</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+			<div class="panel panel-primary">
+					<div class="panel-heading">微博用户列表</div>
+					<div class="panel-body">
+						<div class="list-group list-pionter" id="userList">
+							<span class='list-group-item'></span>
+							<span class='list-group-item'></span>
+							<span class='list-group-item'></span>
+							<span class='list-group-item'></span>
+							<span class='list-group-item'></span>
+							<span class='list-group-item'></span>
+							<span class='list-group-item'></span>
+							<span class='list-group-item'></span>
+							<span class='list-group-item'></span>
+							<span class='list-group-item'></span>
+						</div>
+						<div class="btn-group">
+							<button type="button" class="btn btn-default" id="userPrveBtn">上一页</button>
+							<button type="button" class="btn btn-default" id="userNextBtn">下一页</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="panel panel-default regist" id="login">
+			<div class="panel-heading"><strong>用户登录</strong></div>
+			<div class="panel-body">
+				<div class="input-group reg-ipt">
+					<span class="input-group-addon">用户名　：</span>
+					<input type="text" class="form-control" id="Uname" placeholder="请输入用户名">
+				</div>
+				<div class="input-group reg-ipt">
+					<span class="input-group-addon">密　码　：</span>
+					<input type="password" class="form-control" id="Psw" placeholder="请输入密码">
+				</div>
+				<div class="form-group reg-btn">
+					<div class="col-sm-offset-2 col-sm-10">
+						<button class="btn btn-default" id="enterLog">登录</button>
+						<button class="btn btn-default" id="regLog">注册</button>
+						<button class="btn btn-default" id="clossLog">关闭</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="panel panel-default regist" id="regist">
+			<div class="panel-heading"><strong>用户注册</strong></div>
+			<div class="panel-body">
+				<div class="input-group reg-ipt">
+					<span class="input-group-addon">用户名　：</span>
+					<input type="text" class="form-control" id="regUname" placeholder="请输入用户名">
+				</div>
+				<div class="input-group reg-ipt">
+					<span class="input-group-addon">密　码　：</span>
+					<input type="password" class="form-control" id="regPsw" placeholder="请输入密码">
+				</div>
+				<div class="input-group reg-ipt">
+					<span class="input-group-addon">验证密码：</span>
+					<input type="password" class="form-control" id="regPsw2" placeholder="请再次输入密码">
+				</div>
+				<div class="form-group reg-btn">
+					<div class="col-sm-offset-2 col-sm-10">
+						<button class="btn btn-default" id="enterReg">提交注册</button>
+						<button class="btn btn-default" id="rtnLog">关闭</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="mask">&nbsp;</div>
+	<script>
+		// 初始化
+		$(".logMsg").hide();		// 默认隐藏登录信息。
+		$(".btn-group").css("float","right");
+		var userId;					// 初始用户ID；
+		var userListPage = 0;		// 初始用户列表页面为第一页
+		var consPage = 0;		// 微博内容列表页的页数
+
+		// 用户登录验证
+		function loginYN() {
+			$.ajax({
+				url : "http://ajaxh518.taobaoxyz.com/api/user/?&method=getinfo",
+				type : "get",
+				dataType : "jsonp",
+				jsonp : "jsoncb",
+				success : function(data) {
+					if (data.done){
+						$("#loginbar-top").hide();
+						$(".logMsg").html("&nbsp;&nbsp;用户" + data.data.name + "已登录");
+						$(".logMsg").show();
+						$(".quitLog").show();
+						userId = data.data._id;
+						$("#userConsList").html(data.data.name + "的微博列表")
+					}
+				},
+				error : function() {
+					alert("数据链接失败！")
+				}
+			})
+		}
+		loginYN();
+		// 显示注册框
+		$("#regbtn").click(function() {
+			$(".mask").css("width",$(window).width());
+			$(".mask").css("height",$(window).height());
+			$(".mask").show();
+			$("#regist").show();
+		})
+		$("#regLog").click(function() {
+			$(".mask").hide();
+			$("#login").hide();
+			clearIpt();
+			$(".mask").show();
+			$("#regist").show();
+		})
+		// 隐藏注册框
+		$("#rtnLog").click(function() {
+			$(".mask").hide();
+			$("#regist").hide();
+			clearIpt();
+		})
+
+		// 清除注册框内容
+		function clearIpt() {
+			$("#regUname").val("");
+			$("#regPsw").val("");
+			$("#regPsw2").val("");
+		}
+
+		// 提交注册
+		$("#enterReg").click(function() {
+			if ($("#regPsw").val() === $("#regPsw2").val()){
+				$.ajax({
+					url : "http://ajaxh518.taobaoxyz.com/api/user/?name=" + $("#regUname").val() + "&password=" + $("#regPsw").val() + "&method=regist",
+					type: "get",
+					dataType : "jsonp",
+					jsonp : "jsoncb",
+					success : function(data) {
+						if (data.done){
+							alert("注册成功！");
+							$(".mask").hide();
+							$("#regist").hide();
+							clearIpt();
+						} else {
+							switch(data.code) {
+								case 0 : 
+									alert(data.message);
+									break;
+								case 1 : 
+									alert("缺少用户名和密码！");
+									break;
+								case 2 :
+									alert("用户名已存在！");
+									break;
+								default : alert("未知错误！请稍后重试。");
+							}
+						}
+					},
+					error : function() {
+						alert("服务器数据请求失败！请稍后重试。");
+					}
+				})
+			} else {
+				alert("两次输入密码不一致！请检查后再提交。")
+			}
+		})
+
+		// 显示登录框
+		$("#logbtn-open").click(function() {
+			$(".mask").css("width",$(window).width());
+			$(".mask").css("height",$(window).height());
+			$(".mask").show();
+			$("#login").show();
+		})
+
+		// 隐藏登录框
+		$("#clossLog").click(function() {
+			$(".mask").hide();
+			$("#login").hide();
+			clearIpt();
+		})
+
+		// 登陆验证
+		$("#enterLog").click(function() {
+			$.ajax({
+				url : "http://ajaxh518.taobaoxyz.com/api/user/?method=login&name=" + $("#Uname").val() + "&password=" + $("#Psw").val(),
+				type : "get",
+				dataType : "jsonp",
+				jsonp : "jsoncb",
+				success : function(data) {
+					if (data.done) {
+						alert("登陆成功！");
+						$(".mask").hide();
+						$("#login").hide();
+						loginYN();
+						setTimeout(showCons, 200);
+					} else if (data.code == 0) {
+						alert("用户名或密码错误！");
+					} else {
+						alert("未知错误！请稍候重试！");
+					}
+				},
+				error : function() {
+					alert("服务器数据请求失败！请稍后重试。");
+				}
+			})
+		})
+
+		// 退出登录
+		$(".quitLog").click(function(){
+			$.ajax({
+				url : "http://ajaxh518.taobaoxyz.com/api/user/?method=logout",
+				type : "get",
+				dataType : "jsonp",
+				jsonp : "jsoncb",
+				success : function(data) {
+					if (data.done){
+						alert("您已退出登录！");
+						$(".logMsg").hide();
+						$(".quitLog").hide();
+						$("#loginbar-top").show();
+					} else {
+						alert("无法退出！请稍候再试！")
+					}
+				},
+				error : function() {
+					alert("数据连接失败！请稍后再试。");
+				}
+			})
+		})
+
+		// 获取已注册用户列表
+		function getUsers() {
+			$.ajax({
+				url : "http://ajaxh518.taobaoxyz.com/api/user/?&method=listuser&page=" + userListPage,
+				type : "get",
+				dataType : "jsonp",
+				jsonp : "jsoncb",
+				success : function(data) {
+					//var userlist = "";
+					for (var i = 0; i < data.data.length; i++){
+						$("#userList span").eq(i).html(data.data[i].name);
+						//userlist += "<span class='list-group-item'>" + data.data[i].name + "</span>";
+					}
+					//$("#userList").html(userlist);
+					if (data.data.length < 10){
+						userListPage --;
+					}
+				},
+				error : function() {
+					alert("数据连接错误！")
+				}
+			})
+		}
+		getUsers();
+		// 下一页用户列表
+		$("#userNextBtn").click(function() {
+			userListPage ++;
+			getUsers();
+		})
+		// 上一页用户列表
+		$("#userPrveBtn").click(function() {
+			userListPage --;
+			if (userListPage <= 0){
+				userListPage = 0;
+			}
+			getUsers();
+		})
+
+		// 发布微博
+		$("#subBtn").click(function() {
+			$.ajax({
+				url : "http://ajaxh518.taobaoxyz.com/api/msg/?method=add&text=" + $(".form-control").val(),
+				type : "get",
+				dataType : "jsonp",
+				jsonp : "jsoncb",
+				success : function(data) {
+					if (data.done){
+						setTimeout(showCons, 200);
+					} else {
+						switch (data.code){
+							case 0 :
+								alert("您尚未登录！请登录后再试。");
+								break;
+							case 1 :
+								alert("您没有权限发布新微博！");
+								break;
+							default :
+								alert("未知错误！请稍后再试。")
+								break;
+						}
+					}
+				},
+				error : function() {
+					alert("数据连接错误！")
+				}
+			})
+		})
+		
+		
+
+		// 显示微博内容列表
+		function showCons () {
+			$.ajax({
+				url : "http://ajaxh518.taobaoxyz.com/api/msg/?method=list&count=10&uid=" + userId + "&page=" + consPage,
+				type : "get",
+				dataType : "jsonp",
+				jsonp : "jsoncb",
+				success : function(data) {
+					if (data.done){
+						var consList = "";
+						for (var i = 0; i < data.data.length; i++){
+							consList += '<li class="list-group-item"><p>' + data.data[i].text + '</p><var>' + now(data.data[i].time) + '</var><em>删除</em></li>'
+						}
+						$("#cons").html(consList);
+						if (consPage > 0 && data.data.length < 10){
+							consPage --;
+						}
+					} else if(data.code == 0){
+						alert("查看微博列表需要登录！请登录后重试。")
+					} else if(data.code == 1){
+						alert("未知错误！"+data.message)
+					}
+				},
+				error : function() {
+					alert("数据连接错误！")
+				}
+			})
+		}
+		setTimeout(showCons, 200);
+
+		$("#consNextBtn").click(function() {
+			consPage ++;
+			setTimeout(showCons, 200);
+		})
+		$("#consPrveBtn").click(function() {
+			consPage --;
+			if (consPage <= 0){
+				consPage = 0;
+			}
+			setTimeout(showCons, 200);
+		})
+
+		// 将时间转换成规定格式
+		function now(time) {
+			var time = new Date(time);
+			var year = time.getFullYear();
+			var month = time.getMonth() + 1;
+			var day = time.getDate();
+			var h = time.getHours();
+			var m = time.getMinutes();
+			return year + "年" + dblTime(month) + "月" + dblTime(day) + "日 " + dblTime(h) + ":" + dblTime(m);
+		}
+
+		// 一位数字前面加0
+		function dblTime(x) {
+			if (x <= 9 && x >= 0){
+				x = "0" + x;
+			}
+			return x;
+		}
+		
+		// 通过用户名获取用户ID
+		function getUserId(name){
+			$.ajax({
+				url : "http://ajaxh518.taobaoxyz.com/api/user/?method=getinfo&name=" + name,
+				type : "get",
+				dataType : "jsonp",
+				jsonp : "jsoncb",
+				success : function(data) {
+					if (data.done){
+						userId = data.data._id
+					} else {
+						alert("无此用户");
+					}
+				},
+				error : function() {
+					alert("数据连接错误！");
+				}
+			})
+		}
+
+
+		// 获取指定用户的数据列表
+		$("#userList span").click(function (){
+			getUserId($(this).html());
+			setTimeout(showCons,300);
+			var $thisTag = $(this);
+			setTimeout(function(){
+				$("#userConsList").html($thisTag.html() + "的微博列表")
+			},300)
+			
+			
+		})
+		
+		// 用户列表，鼠标移上去背景变色
+		$("#userList span").mouseenter(function (){
+			$(this).css("background","#eee")
+		})
+		$("#userList span").mouseleave(function(){
+			$(this).css("background-color","#fff")
+		})
+	</script>
+
+
+</body>
+</html>
