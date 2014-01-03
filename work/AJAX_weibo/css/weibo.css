@@ -112,3 +112,47 @@ body{
 .list-pionter span {
 	cursor: pointer;
 }
+.pub {
+	margin-bottom: 40px;
+}
+.look-menu {
+	position: absolute;
+	top: 100px;
+	left: 40px;
+	z-index: 10;
+}
+.look-btn {
+	width: 48px;
+	background: url(../images/look.gif) -306px 0 no-repeat;
+}
+.pub-look {
+	position: absolute;
+	top: 100px;
+	left: 100px;
+	z-index: 10;
+	display: none;
+}
+.look1 {
+	background: url(../images/look.gif) -2px 0 no-repeat;
+}
+.look2 {
+	background: url(../images/look.gif) -40px 0 no-repeat;
+}
+.look3 {
+	background: url(../images/look.gif) -78px 0 no-repeat;
+}
+.look4 {
+	background: url(../images/look.gif) -116px 0 no-repeat;
+}
+.look5 {
+	background: url(../images/look.gif) -154px 0 no-repeat;
+}
+.look6 {
+	background: url(../images/look.gif) -192px 0 no-repeat;
+}
+.look7 {
+	background: url(../images/look.gif) -230px 0 no-repeat;
+}
+.look8 {
+	background: url(../images/look.gif) -268px 0 no-repeat;
+}

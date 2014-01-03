@@ -24,9 +24,22 @@
 				<div class="panel panel-primary">
 					<div class="panel-heading">微博发布</div>
 					<div class="panel-body">
-						<div class="input-group">
+						<div class="input-group pub">
 							<input type="text" class="form-control">
 							<span class="input-group-addon pub-btn" id="subBtn">发布</span>
+						</div>
+						<div class="btn-group look-menu">
+							<button type="button" class="btn btn-default look-btn">&nbsp;</button>
+						</div>
+						<div class="btn-group pub-look">
+							<button type="button" class="btn btn-default look1" value="look1">&nbsp;</button>
+							<button type="button" class="btn btn-default look2" value="look2">&nbsp;</button>
+							<button type="button" class="btn btn-default look3" value="look3">&nbsp;</button>
+							<button type="button" class="btn btn-default look4" value="look4">&nbsp;</button>
+							<button type="button" class="btn btn-default look5" value="look5">&nbsp;</button>
+							<button type="button" class="btn btn-default look6" value="look6">&nbsp;</button>
+							<button type="button" class="btn btn-default look7" value="look7">&nbsp;</button>
+							<button type="button" class="btn btn-default look8" value="look8">&nbsp;</button>
 						</div>
 					</div>
 				</div>
@@ -34,6 +47,7 @@
 					<div class="panel-heading" id="userConsList">微博列表</div>
 					<div class="panel-body">
 						<ul class="list-group cons" id="cons">
+							<li class='list-group-item'>您需要登录，才能查看列表！</li>
 						</ul>
 						<div class="btn-group">
 							<button type="button" class="btn btn-default" id="consPrveBtn">上一页</button>
@@ -117,7 +131,7 @@
 		$(".btn-group").css("float","right");
 		var userId;					// 初始用户ID；
 		var userListPage = 0;		// 初始用户列表页面为第一页
-		var consPage = 0;		// 微博内容列表页的页数
+		var consPage = 0;			// 微博内容列表页的页数
 
 		// 用户登录验证
 		function loginYN() {
@@ -306,7 +320,7 @@
 				success : function(data) {
 					//var userlist = "";
 					for (var i = 0; i < data.data.length; i++){
-						$("#userList span").eq(i).html(data.data[i].name);
+						$("#userList span").eq(i).html(data.data[i].name).attr("id_data",data.data[i]._id);
 						//userlist += "<span class='list-group-item'>" + data.data[i].name + "</span>";
 					}
 					//$("#userList").html(userlist);
@@ -343,7 +357,9 @@
 				jsonp : "jsoncb",
 				success : function(data) {
 					if (data.done){
+						alert("发布成功！")
 						setTimeout(showCons, 200);
+						$(".form-control").val("");
 					} else {
 						switch (data.code){
 							case 0 :
@@ -379,12 +395,13 @@
 						for (var i = 0; i < data.data.length; i++){
 							consList += '<li class="list-group-item"><p>' + data.data[i].text + '</p><var>' + now(data.data[i].time) + '</var><em>删除</em></li>'
 						}
+						consList = viewLook(consList);		// 显示表情
 						$("#cons").html(consList);
-						if (consPage > 0 && data.data.length < 10){
+						if (consPage > 1 && data.data.length < 10){
 							consPage --;
 						}
 					} else if(data.code == 0){
-						alert("查看微博列表需要登录！请登录后重试。")
+						$("#cons li").eq(0).show();
 					} else if(data.code == 1){
 						alert("未知错误！"+data.message)
 					}
@@ -467,6 +484,36 @@
 		$("#userList span").mouseleave(function(){
 			$(this).css("background-color","#fff")
 		})
+
+		// 表情按钮开关
+		var clickNum = 0;
+		$(".look-btn").click(function() {
+			
+			if (clickNum % 2 == 0){
+				$(".pub-look").fadeIn();
+			} else {
+				$(".pub-look").fadeOut();
+			}
+			clickNum ++;
+		})
+		// 插入表情
+		for (var i = 0;i < $(".pub-look button").length; i++){
+			$(".pub-look button").eq(i).click(function() {
+				$(".form-control").val($(".form-control").val() + "/" + $(this).val() + ";")
+			})
+		}
+		// 显示表情：将表情的标志字符转换为表情图片
+		function viewLook(text) {
+			text = text.replace(/\/look1;/ig,"<img src='images/look1.gif'>");
+			text = text.replace(/\/look2;/ig,"<img src='images/look2.gif'>");
+			text = text.replace(/\/look3;/ig,"<img src='images/look3.gif'>");
+			text = text.replace(/\/look4;/ig,"<img src='images/look4.gif'>");
+			text = text.replace(/\/look5;/ig,"<img src='images/look5.gif'>");
+			text = text.replace(/\/look6;/ig,"<img src='images/look6.gif'>");
+			text = text.replace(/\/look7;/ig,"<img src='images/look7.gif'>");
+			text = text.replace(/\/look8;/ig,"<img src='images/look8.gif'>");
+			return text;
+		}
 	</script>
 
 
