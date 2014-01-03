@@ -1,0 +1,5 @@
+﻿AJAX 、JSON及JSONP:
+http://note.youdao.com/share/?id=4af0466c783902cc429721e87ddc1770&type=note
+
+简易微博项目总结（数据交互）:
+http://note.youdao.com/share/?id=4841a9c13fecc14c4670fcc2a14da448&type=note
